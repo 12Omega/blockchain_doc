@@ -18,7 +18,10 @@ const documentSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function(v) {
-        return /^Qm[1-9A-HJ-NP-Za-km-z]{44}$/.test(v) || /^bafy[a-z0-9]{55}$/.test(v);
+        // Allow standard IPFS hashes (CIDv0 and CIDv1) or local fallback hashes
+        return /^Qm[1-9A-HJ-NP-Za-km-z]{44}$/.test(v) || 
+               /^bafy[a-z0-9]{55}$/.test(v) || 
+               /^local_[a-fA-F0-9]{32}$/.test(v);
       },
       message: 'Invalid IPFS hash format'
     }
