@@ -8,15 +8,8 @@ const {
   validateWalletAddress
 } = require('../middleware/auth');
 const {
-  handleValidationErrors,
-  securityValidation,
-  validateContentType,
-  validateRequestSize
+  handleValidationErrors
 } = require('../middleware/validation');
-const {
-  validationRules,
-  sanitizeRequest
-} = require('../utils/validation');
 const logger = require('../utils/logger');
 
 const router = express.Router();
@@ -135,25 +128,29 @@ router.get('/:walletAddress',
 // @desc    Update user profile
 // @access  Private
 router.put('/profile',
-  // Security middleware
-  validateRequestSize(10 * 1024), // 10KB limit
-  validateContentType(['application/json']),
-  ...securityValidation({
-    enableSanitization: true,
-    enableXSSPrevention: true,
-    enableSQLInjectionPrevention: true,
-    enableNoSQLInjectionPrevention: true
-  }),
-  
   // Authentication
   authenticateToken,
-  
   // Input validation
   [
-    validationRules.name('profile.name', false),
-    validationRules.email('profile.email'),
-    validationRules.organization('profile.organization', false),
-    validationRules.text('profile.department', 100, false)
+    body('profile.name')
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 100 })
+      .withMessage('Name must be between 1 and 100 characters'),
+    body('profile.email')
+      .optional()
+      .isEmail()
+      .withMessage('Invalid email format'),
+    body('profile.organization')
+      .optional()
+      .trim()
+      .isLength({ min: 1, max: 200 })
+      .withMessage('Organization name must be between 1 and 200 characters'),
+    body('profile.department')
+      .optional()
+      .trim()
+      .isLength({ max: 100 })
+      .withMessage('Department must be less than 100 characters')
   ],
   handleValidationErrors,
   async (req, res) => {
@@ -211,16 +208,6 @@ router.put('/profile',
 // @desc    Update user role (admin only)
 // @access  Private (Admin)
 router.put('/:walletAddress/role',
-  // Security middleware
-  validateRequestSize(1024), // 1KB limit
-  validateContentType(['application/json']),
-  ...securityValidation({
-    enableSanitization: true,
-    enableXSSPrevention: true,
-    enableSQLInjectionPrevention: true,
-    enableNoSQLInjectionPrevention: true
-  }),
-  
   // Authentication and authorization
   authenticateToken,
   requireRole('admin'),
@@ -233,7 +220,9 @@ router.put('/:walletAddress/role',
       }
       return true;
     }),
-    validationRules.role('role')
+    body('role')
+      .isIn(['admin', 'issuer', 'verifier', 'student'])
+      .withMessage('Invalid role')
   ],
   handleValidationErrors,
   async (req, res) => {
