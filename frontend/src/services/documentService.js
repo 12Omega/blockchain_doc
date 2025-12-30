@@ -77,7 +77,7 @@ class DocumentService {
   async uploadDocument(file, metadata, onProgress) {
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('document', file); // Changed from 'file' to 'document'
       formData.append('metadata', JSON.stringify(metadata));
 
       const response = await this.api.post('/documents/upload', formData, {
@@ -107,7 +107,7 @@ class DocumentService {
   async verifyDocument(file) {
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('document', file); // Changed from 'file' to 'document'
 
       const response = await this.api.post('/documents/verify', formData, {
         headers: {
