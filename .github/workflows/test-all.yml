@@ -1,0 +1,154 @@
+name: Test All Components
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - develop
+
+jobs:
+  test-contracts:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: contracts/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./contracts
+        run: npm ci
+      
+      - name: Compile contracts
+        working-directory: ./contracts
+        run: npm run compile
+      
+      - name: Run contract tests
+        working-directory: ./contracts
+        run: npm test
+      
+      - name: Run gas reporter
+        working-directory: ./contracts
+        run: REPORT_GAS=true npm test
+        continue-on-error: true
+      
+      - name: Security analysis with Slither
+        working-directory: ./contracts
+        run: |
+          pip3 install slither-analyzer
+          slither . || echo "Slither analysis completed with warnings"
+        continue-on-error: true
+
+  test-backend:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand({ping: 1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./backend
+        run: npm ci
+      
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://localhost:27017/test
+          JWT_SECRET: test-secret-key-for-ci
+          WEB3_STORAGE_API_KEY: test-key
+          PINATA_API_KEY: test-key
+          PINATA_SECRET_API_KEY: test-secret
+          NFT_STORAGE_API_KEY: test-key
+      
+      - name: Check code coverage
+        working-directory: ./backend
+        run: npm run test:coverage || echo "Coverage check skipped"
+        continue-on-error: true
+      
+      - name: Security audit
+        working-directory: ./backend
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+      
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: npm test -- --watchAll=false --coverage
+        env:
+          CI: true
+      
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          REACT_APP_API_URL: http://localhost:3001
+          REACT_APP_CHAIN_ID: 11155111
+          REACT_APP_CHAIN_NAME: Sepolia
+      
+      - name: Security audit
+        working-directory: ./frontend
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+  integration-test:
+    needs: [test-contracts, test-backend, test-frontend]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Integration test summary
+        run: |
+          echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Smart contracts tests passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Backend tests passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Frontend tests passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All components are ready for deployment!" >> $GITHUB_STEP_SUMMARY

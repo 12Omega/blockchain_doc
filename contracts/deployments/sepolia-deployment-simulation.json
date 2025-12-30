@@ -1,0 +1,22 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0x742d35Cc6634C0532925a3b8D4C9db96590c6C87",
+  "deploymentTime": "2025-09-25T11:29:28.091Z",
+  "contracts": {
+    "AccessControl": {
+      "address": "0x1234567890123456789012345678901234567890",
+      "deploymentHash": "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+    },
+    "DocumentRegistry": {
+      "address": "0x0987654321098765432109876543210987654321",
+      "deploymentHash": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+    }
+  },
+  "gasUsed": {
+    "AccessControl": "1234567",
+    "DocumentRegistry": "2345678"
+  },
+  "simulation": true,
+  "note": "This is a simulated deployment for demonstration purposes"
+}

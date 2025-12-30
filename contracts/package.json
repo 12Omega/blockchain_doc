@@ -1,0 +1,26 @@
+{
+  "name": "blockchain-document-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for document verification system",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "deploy:local": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia",
+    "deploy:simulate": "node scripts/simulate-deployment.js",
+    "test:local": "npx hardhat run scripts/test-deployment.js --network localhost",
+    "test:sepolia": "npx hardhat run scripts/test-deployment.js --network sepolia",
+    "verify:sepolia": "npx hardhat run scripts/verify-contracts.js --network sepolia",
+    "node": "npx hardhat node"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "fast-check": "^4.3.0",
+    "hardhat": "^2.19.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "blockchain-document-verification": "file:..",
+    "dotenv": "^17.2.2"
+  }
+}

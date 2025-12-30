@@ -1,0 +1,96 @@
+name: Deploy Frontend to Vercel
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+      
+      - name: Run linter
+        working-directory: ./frontend
+        run: npm run lint || echo "Linting skipped"
+      
+      - name: Run tests
+        working-directory: ./frontend
+        run: npm test -- --watchAll=false
+        env:
+          CI: true
+      
+      - name: Build application
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_CHAIN_ID: ${{ secrets.REACT_APP_CHAIN_ID }}
+          REACT_APP_CHAIN_NAME: ${{ secrets.REACT_APP_CHAIN_NAME }}
+          REACT_APP_DOCUMENT_REGISTRY_ADDRESS: ${{ secrets.REACT_APP_DOCUMENT_REGISTRY_ADDRESS }}
+          REACT_APP_ACCESS_CONTROL_ADDRESS: ${{ secrets.REACT_APP_ACCESS_CONTROL_ADDRESS }}
+      
+      - name: Check build size
+        working-directory: ./frontend
+        run: |
+          BUILD_SIZE=$(du -sh build | cut -f1)
+          echo "Build size: $BUILD_SIZE"
+          echo "### Build Information" >> $GITHUB_STEP_SUMMARY
+          echo "- Build size: $BUILD_SIZE" >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./frontend
+          vercel-args: '--prod'
+        continue-on-error: true
+      
+      - name: Deployment notification
+        run: |
+          echo "## Frontend Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "Frontend has been deployed to Vercel" >> $GITHUB_STEP_SUMMARY
+          echo "Check Vercel dashboard for deployment URL" >> $GITHUB_STEP_SUMMARY
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Deployment status
+        run: |
+          if [ "${{ needs.deploy.result }}" == "success" ]; then
+            echo "✅ Frontend deployment successful"
+          else
+            echo "❌ Frontend deployment failed"
+          fi

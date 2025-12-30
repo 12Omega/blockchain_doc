@@ -1,0 +1,20 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0xD2F81565156273F14B90005e30ab97F600CC9AE5",
+  "deploymentTime": "2025-11-28T15:43:52.284Z",
+  "contracts": {
+    "AccessControl": {
+      "address": "0xB66a64407a0Ef8ea811b9df3DadE8b8a7373Bec0",
+      "deploymentHash": "0x53aa428a298da6e3baacaa37cd628d9c224659d3df28ef090f02dc41767bc867"
+    },
+    "DocumentRegistry": {
+      "address": "0x76E24c574c73f23b77f6091e7C717D0833cf5FA7",
+      "deploymentHash": "0x7babe8fcc5e7adbc21334c8b06e6059887a9a4770746ce08c44fd0b01a9d6450"
+    }
+  },
+  "gasUsed": {
+    "AccessControl": "1196707",
+    "DocumentRegistry": "2466502"
+  }
+}

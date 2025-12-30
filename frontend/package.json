@@ -1,0 +1,75 @@
+{
+  "name": "blockchain-document-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@base-org/account": "^2.5.0",
+    "@coinbase/wallet-sdk": "^4.3.7",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@gemini-wallet/core": "^0.3.2",
+    "@metamask/sdk": "^0.34.0",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/material": "^5.15.0",
+    "@safe-global/safe-apps-provider": "^0.18.6",
+    "@safe-global/safe-apps-sdk": "^9.1.0",
+    "@tanstack/react-query": "^5.90.11",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.1",
+    "@walletconnect/ethereum-provider": "^2.23.0",
+    "@web3modal/wagmi": "^5.1.11",
+    "ajv": "^8.12.0",
+    "ajv-keywords": "^5.1.0",
+    "axios": "^1.6.2",
+    "blockchain-document-verification": "file:..",
+    "ethers": "^6.8.1",
+    "magic-sdk": "^31.2.0",
+    "porto": "^0.2.37",
+    "qr-scanner": "^1.4.2",
+    "qrcode.react": "^3.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.3.8",
+    "react-qr-reader": "^3.0.0-beta-1",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "5.0.1",
+    "viem": "^2.40.3",
+    "wagmi": "^3.0.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(axios)/)"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^4.9.5"
+  }
+}
