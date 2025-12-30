@@ -15,10 +15,19 @@
     "deploy:testnet": "cd contracts && npx hardhat run scripts/deploy.js --network sepolia",
     "compile": "cd contracts && npx hardhat compile"
   },
-  "keywords": ["blockchain", "ethereum", "ipfs", "document-verification", "smart-contracts"],
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "ipfs",
+    "document-verification",
+    "smart-contracts"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.13.2"
   }
 }
