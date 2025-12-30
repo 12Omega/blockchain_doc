@@ -48,7 +48,7 @@ const useMultiWallet = () => {
 
   const updateWalletConnectProvider = async () => {
     try {
-      if (connector) {
+      if (connector && typeof connector.getProvider === 'function') {
         const wcProvider = await connector.getProvider();
         const ethersProvider = new ethers.BrowserProvider(wcProvider);
         const ethersSigner = await ethersProvider.getSigner();
