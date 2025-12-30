@@ -17,17 +17,12 @@ const {
 } = require('../middleware/consentCheck');
 const {
   handleValidationErrors,
-  securityValidation,
+  validateRequestSize,
   validateContentType,
-  validateRequestSize
+  securityValidation,
+  validateFile
 } = require('../middleware/validation');
-const {
-  validationRules,
-  validateFile,
-  sanitizeRequest,
-  ALLOWED_FILE_TYPES,
-  FILE_SIZE_LIMITS
-} = require('../utils/validation');
+const { validationRules } = require('../utils/validation');
 const ipfsService = require('../services/ipfsService');
 const encryptionService = require('../services/encryptionService');
 const blockchainService = require('../services/blockchainService');
@@ -35,6 +30,19 @@ const qrcodeService = require('../services/qrcodeService');
 const dbOptimizationService = require('../services/databaseOptimizationService');
 const batchProcessingService = require('../services/batchProcessingService');
 const logger = require('../utils/logger');
+
+// File constants
+const FILE_SIZE_LIMITS = {
+  document: 10 * 1024 * 1024, // 10MB
+  image: 5 * 1024 * 1024,     // 5MB
+  default: 10 * 1024 * 1024   // 10MB
+};
+
+const ALLOWED_FILE_TYPES = {
+  documents: ['pdf', 'doc', 'docx', 'txt'],
+  images: ['jpg', 'jpeg', 'png', 'gif'],
+  all: ['pdf', 'doc', 'docx', 'txt', 'jpg', 'jpeg', 'png', 'gif']
+};
 
 const router = express.Router();
 
@@ -92,45 +100,56 @@ const upload = multer({
 // @desc    Register document with complete flow: hash, encrypt, IPFS upload, blockchain registration, QR code generation
 // @access  Private (Issuer role required)
 router.post('/register',
-  // Security middleware
-  validateRequestSize(50 * 1024 * 1024), // 50MB limit
-  validateContentType(['multipart/form-data']),
-  ...securityValidation({
-    enableSanitization: true,
-    enableXSSPrevention: true,
-    enableSQLInjectionPrevention: true,
-    enableNoSQLInjectionPrevention: true,
-    enableCommandInjectionPrevention: true,
-    enablePathTraversalPrevention: true
-  }),
-  
   // Authentication and authorization
   authenticateToken,
   requirePermission('canIssue'),
   
-  // Privacy consent checks - TEMPORARILY DISABLED FOR TESTING
-  // requireConsents(['document_storage', 'blockchain_storage']),
-  
   // File upload
   upload.single('document'),
-  validateFile({
-    required: true,
-    allowedTypes: ALLOWED_FILE_TYPES.documents,
-    maxSize: FILE_SIZE_LIMITS.document
-  }),
   
   // Input validation
   [
-    validationRules.name('studentName', true),
-    validationRules.studentId('studentId'),
-    validationRules.name('ownerName', true),
-    validationRules.documentType('documentType'),
-    validationRules.date('issueDate', true),
-    validationRules.date('expiryDate', false),
-    validationRules.text('grade', 20, false),
-    validationRules.text('course', 200, false),
-    validationRules.text('description', 500, false),
-    validationRules.walletAddress('ownerAddress').optional()
+    body('studentName')
+      .notEmpty()
+      .withMessage('Student name is required')
+      .isLength({ min: 1, max: 100 })
+      .withMessage('Student name must be between 1 and 100 characters'),
+    body('studentId')
+      .notEmpty()
+      .withMessage('Student ID is required'),
+    body('ownerName')
+      .notEmpty()
+      .withMessage('Owner name is required')
+      .isLength({ min: 1, max: 100 })
+      .withMessage('Owner name must be between 1 and 100 characters'),
+    body('documentType')
+      .isIn(['degree', 'certificate', 'transcript', 'diploma', 'other'])
+      .withMessage('Invalid document type'),
+    body('issueDate')
+      .notEmpty()
+      .withMessage('Issue date is required')
+      .isISO8601()
+      .withMessage('Invalid date format'),
+    body('expiryDate')
+      .optional()
+      .isISO8601()
+      .withMessage('Invalid date format'),
+    body('grade')
+      .optional()
+      .isLength({ max: 20 })
+      .withMessage('Grade must be less than 20 characters'),
+    body('course')
+      .optional()
+      .isLength({ max: 200 })
+      .withMessage('Course must be less than 200 characters'),
+    body('description')
+      .optional()
+      .isLength({ max: 500 })
+      .withMessage('Description must be less than 500 characters'),
+    body('ownerAddress')
+      .optional()
+      .matches(/^0x[a-fA-F0-9]{40}$/)
+      .withMessage('Invalid wallet address format')
   ],
   handleValidationErrors,
   async (req, res) => {
