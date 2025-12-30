@@ -35,6 +35,14 @@ class IPFSService {
         free: true,
         limits: 'unlimited',
         enabled: !!process.env.NFT_STORAGE_API_KEY
+      },
+      {
+        name: 'local',
+        endpoint: 'local',
+        priority: 4,
+        free: true,
+        limits: 'disk space',
+        enabled: true // Always enabled as final fallback
       }
     ];
 
@@ -52,6 +60,10 @@ class IPFSService {
       maxDelay: 10000, // 10 seconds
       backoffMultiplier: 2
     };
+    
+    // Local storage path for fallback
+    this.localStoragePath = process.env.LOCAL_IPFS_PATH || './uploads/ipfs';
+    this.ensureLocalStorageDir();
     
     this.initializeClient();
   }
@@ -72,6 +84,23 @@ class IPFSService {
     } catch (error) {
       logger.error('Failed to initialize IPFS client:', error);
       throw new Error('IPFS service initialization failed');
+    }
+  }
+
+  /**
+   * Ensure local storage directory exists
+   */
+  ensureLocalStorageDir() {
+    const fs = require('fs');
+    const path = require('path');
+    
+    try {
+      if (!fs.existsSync(this.localStoragePath)) {
+        fs.mkdirSync(this.localStoragePath, { recursive: true });
+        logger.info(`Created local IPFS storage directory: ${this.localStoragePath}`);
+      }
+    } catch (error) {
+      logger.error('Failed to create local storage directory:', error);
     }
   }
 
@@ -147,11 +176,13 @@ class IPFSService {
           return await this.uploadToPinata(fileBuffer, filename, metadata);
         case 'nft.storage':
           return await this.uploadToNFTStorage(fileBuffer, filename, metadata);
+        case 'local':
+          return await this.uploadToLocal(fileBuffer, filename, metadata);
         default:
           throw new Error(`Unknown provider: ${provider.name}`);
       }
     } catch (error) {
-      if (attempt < this.retryConfig.maxRetries && this.isRetriableError(error)) {
+      if (attempt < this.retryConfig.maxRetries && this.isRetriableError(error) && provider.name !== 'local') {
         const delay = Math.min(
           this.retryConfig.initialDelay * Math.pow(this.retryConfig.backoffMultiplier, attempt - 1),
           this.retryConfig.maxDelay
@@ -401,6 +432,58 @@ class IPFSService {
   }
 
   /**
+   * Upload to local storage (Final fallback when all IPFS providers are down)
+   */
+  async uploadToLocal(fileBuffer, filename, metadata) {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const crypto = require('crypto');
+      
+      // Generate a pseudo-CID for local storage
+      const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
+      const localCid = `local_${hash.substring(0, 32)}`;
+      
+      // Create filename with timestamp to avoid conflicts
+      const timestamp = Date.now();
+      const safeFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const localFilename = `${timestamp}_${safeFilename}`;
+      const filePath = path.join(this.localStoragePath, localFilename);
+      
+      // Write file to local storage
+      fs.writeFileSync(filePath, fileBuffer);
+      
+      // Create metadata file
+      const metadataPath = path.join(this.localStoragePath, `${localFilename}.meta.json`);
+      const fileMetadata = {
+        originalFilename: filename,
+        localFilename,
+        localCid,
+        size: fileBuffer.length,
+        uploadedAt: new Date().toISOString(),
+        metadata: metadata || {}
+      };
+      fs.writeFileSync(metadataPath, JSON.stringify(fileMetadata, null, 2));
+      
+      logger.info(`File stored locally as fallback`, { 
+        filename, 
+        localCid, 
+        path: filePath 
+      });
+      
+      return {
+        cid: localCid,
+        size: fileBuffer.length,
+        localPath: filePath
+      };
+
+    } catch (error) {
+      logger.error('Local storage upload failed:', { error: error.message, filename });
+      throw new Error(`Local storage upload failed: ${error.message}`);
+    }
+  }
+
+  /**
    * Check health status of all IPFS providers
    */
   async checkIPFSHealth() {
@@ -489,10 +572,16 @@ class IPFSService {
   }
 
   /**
-   * Retrieve file from IPFS using public gateway
+   * Retrieve file from IPFS using public gateway or local storage
    */
   async retrieveFile(ipfsHash) {
     try {
+      // Check if it's a local file
+      if (ipfsHash.startsWith('local_')) {
+        return await this.retrieveLocalFile(ipfsHash);
+      }
+      
+      // Try IPFS gateway
       const response = await axios.get(`${this.ipfsGateway}${ipfsHash}`, {
         responseType: 'arraybuffer',
         timeout: 30000
@@ -502,6 +591,43 @@ class IPFSService {
     } catch (error) {
       logger.error('File retrieval failed:', { error: error.message, ipfsHash });
       throw new Error(`IPFS retrieval failed: ${error.message}`);
+    }
+  }
+
+  /**
+   * Retrieve file from local storage
+   */
+  async retrieveLocalFile(localCid) {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      
+      // Find the metadata file to get the actual filename
+      const files = fs.readdirSync(this.localStoragePath);
+      const metadataFile = files.find(f => f.endsWith('.meta.json'));
+      
+      if (!metadataFile) {
+        throw new Error('Local file metadata not found');
+      }
+      
+      const metadataPath = path.join(this.localStoragePath, metadataFile);
+      const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+      
+      if (metadata.localCid !== localCid) {
+        throw new Error('Local CID mismatch');
+      }
+      
+      const filePath = path.join(this.localStoragePath, metadata.localFilename);
+      
+      if (!fs.existsSync(filePath)) {
+        throw new Error('Local file not found');
+      }
+      
+      return fs.readFileSync(filePath);
+      
+    } catch (error) {
+      logger.error('Local file retrieval failed:', { error: error.message, localCid });
+      throw new Error(`Local file retrieval failed: ${error.message}`);
     }
   }
 
