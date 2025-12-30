@@ -10,15 +10,8 @@ const {
   logAuthEvent,
 } = require("../middleware/auth");
 const {
-  handleValidationErrors,
-  securityValidation,
-  validateContentType,
-  validateRequestSize
+  handleValidationErrors
 } = require("../middleware/validation");
-const {
-  validationRules,
-  sanitizeRequest
-} = require("../utils/validation");
 const logger = require("../utils/logger");
 
 const router = express.Router();
@@ -28,29 +21,16 @@ const router = express.Router();
 // @access  Public
 router.post(
   "/nonce",
-  // Security middleware
-  validateRequestSize(1024), // 1KB limit for nonce requests
-  validateContentType(['application/json']),
-  ...securityValidation({
-    enableSanitization: true,
-    enableXSSPrevention: true,
-    enableSQLInjectionPrevention: true,
-    enableRateLimit: true,
-    rateLimitOptions: { windowMs: 15 * 60 * 1000, max: 10 } // 10 requests per 15 minutes
-  }),
-  
-  // Validation
+  // Basic validation
   [
-    validationRules.walletAddress('walletAddress'),
-    body('role')
-      .optional()
-      .isIn(['admin', 'issuer', 'verifier', 'student'])
-      .withMessage('Invalid role')
+    body('walletAddress')
+      .notEmpty()
+      .withMessage('Wallet address is required')
+      .matches(/^0x[a-fA-F0-9]{40}$/)
+      .withMessage('Invalid wallet address format')
   ],
   handleValidationErrors,
-  
   // Auth middleware
-  logAuthEvent("nonce_request"),
   async (req, res) => {
     try {
       const { walletAddress, role } = req.body;
@@ -109,42 +89,25 @@ router.post(
 // @access  Public
 router.post(
   "/verify",
-  // Security middleware
-  validateRequestSize(2048), // 2KB limit for signature verification
-  validateContentType(['application/json']),
-  ...securityValidation({
-    enableSanitization: true,
-    enableXSSPrevention: true,
-    enableSQLInjectionPrevention: true,
-    enableRateLimit: true,
-    rateLimitOptions: { windowMs: 15 * 60 * 1000, max: 5 } // 5 attempts per 15 minutes
-  }),
-  
-  // Validation
+  // Basic validation
   [
-    validationRules.walletAddress('walletAddress'),
+    body('walletAddress')
+      .notEmpty()
+      .withMessage('Wallet address is required')
+      .matches(/^0x[a-fA-F0-9]{40}$/)
+      .withMessage('Invalid wallet address format'),
     body("signature")
       .notEmpty()
-      .withMessage("Signature is required")
-      .isLength({ min: 130, max: 134 })
-      .withMessage("Invalid signature length")
-      .matches(/^0x[a-fA-F0-9]{128,132}$/)
-      .withMessage("Invalid signature format"),
+      .withMessage("Signature is required"),
     body("message")
       .notEmpty()
-      .withMessage("Message is required")
-      .isLength({ max: 500 })
-      .withMessage("Message too long"),
+      .withMessage("Message is required"),
     body("nonce")
       .notEmpty()
       .withMessage("Nonce is required")
-      .isLength({ min: 32, max: 64 })
-      .withMessage("Invalid nonce length")
   ],
   handleValidationErrors,
-  
   // Auth middleware
-  logAuthEvent("signature_verification"),
   async (req, res) => {
     try {
       // Check validation errors
@@ -238,7 +201,6 @@ router.post(
 router.post(
   "/refresh",
   authenticateToken,
-  logAuthEvent("token_refresh"),
   async (req, res) => {
     try {
       const user = req.user;
@@ -279,7 +241,6 @@ router.post(
 router.post(
   "/logout",
   authenticateToken,
-  logAuthEvent("logout"),
   async (req, res) => {
     try {
       const user = req.user;
@@ -350,27 +311,16 @@ router.get("/me", authenticateToken, async (req, res) => {
 // @access  Public
 router.post(
   "/register",
-  // Security middleware
-  validateRequestSize(2048), // 2KB limit
-  validateContentType(['application/json']),
-  ...securityValidation({
-    enableSanitization: true,
-    enableXSSPrevention: true,
-    enableSQLInjectionPrevention: true,
-    enableRateLimit: true,
-    rateLimitOptions: { windowMs: 15 * 60 * 1000, max: 5 } // 5 registrations per 15 minutes
-  }),
-  
-  // Validation
+  // Basic validation
   [
-    validationRules.walletAddress('walletAddress'),
-    validationRules.name('name', false),
-    validationRules.email('email'),
-    validationRules.role('role', false)
+    body('walletAddress')
+      .notEmpty()
+      .withMessage('Wallet address is required')
+      .matches(/^0x[a-fA-F0-9]{40}$/)
+      .withMessage('Invalid wallet address format')
   ],
   handleValidationErrors,
   
-  logAuthEvent("user_registration"),
   async (req, res) => {
     try {
       const { walletAddress, name, email, role } = req.body;
