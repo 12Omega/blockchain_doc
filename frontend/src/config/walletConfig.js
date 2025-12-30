@@ -6,10 +6,10 @@ import { http, fallback } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // WalletConnect Project ID - Get from https://cloud.walletconnect.com
-const projectId = process.env.REACT_APP_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID';
+const projectId = process.env.REACT_APP_WALLETCONNECT_PROJECT_ID || '8fcc22112cb46085fbd557908e9ef667';
 
 // Magic Link API Key - Get from https://magic.link
-export const magicApiKey = process.env.REACT_APP_MAGIC_API_KEY || 'YOUR_MAGIC_API_KEY';
+export const magicApiKey = process.env.REACT_APP_MAGIC_API_KEY || 'pk_live_C7DDC95704CD3037';
 
 // Define chains
 const chains = [sepolia, mainnet, polygon, arbitrum];
