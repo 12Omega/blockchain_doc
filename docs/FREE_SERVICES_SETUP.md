@@ -1,8 +1,8 @@
-# Free Services Setup Guide
+Free Services Setup Guide
 
-This guide walks you through setting up all the free services needed for the Academic Document Blockchain Verification System.
+Hey there! This guide walks you through setting up all the free services needed for the Academic Document Blockchain Verification System.
 
-## Table of Contents
+Table of Contents
 
 1. [Blockchain RPC Provider](#1-blockchain-rpc-provider)
 2. [MongoDB Atlas](#2-mongodb-atlas)
@@ -13,13 +13,13 @@ This guide walks you through setting up all the free services needed for the Aca
 
 ---
 
-## 1. Blockchain RPC Provider
+1. Blockchain RPC Provider
 
 You need an RPC endpoint to interact with the blockchain. Choose one:
 
-### Option A: Infura (Recommended)
+Option A: Infura (Recommended)
 
-**Free Tier:** 100,000 requests/day
+Free Tier: 100,000 requests/day
 
 1. Visit https://infura.io
 2. Sign up for free account
@@ -32,9 +32,9 @@ You need an RPC endpoint to interact with the blockchain. Choose one:
    SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
    ```
 
-### Option B: Alchemy
+Option B: Alchemy
 
-**Free Tier:** 300M compute units/month
+Free Tier: 300M compute units/month
 
 1. Visit https://www.alchemy.com
 2. Sign up for free account
@@ -49,17 +49,17 @@ You need an RPC endpoint to interact with the blockchain. Choose one:
 
 ---
 
-## 2. MongoDB Atlas
+2. MongoDB Atlas
 
-**Free Tier:** 512MB storage, 500 connections
+Free Tier: 512MB storage, 500 connections
 
-### Setup Steps
+Setup Steps
 
-1. **Create Account**
+1. Create Account
    - Visit https://www.mongodb.com/cloud/atlas/register
    - Sign up with email or Google
 
-2. **Create Cluster**
+2. Create Cluster
    - Click "Build a Database"
    - Select "M0 FREE" tier
    - Choose cloud provider (AWS recommended)
@@ -67,8 +67,8 @@ You need an RPC endpoint to interact with the blockchain. Choose one:
    - Cluster name: `blockchain-docs` (or any name)
    - Click "Create"
 
-3. **Configure Security**
-   - **Database Access:**
+3. Configure Security
+   - Database Access:
      - Click "Database Access" in left menu
      - Click "Add New Database User"
      - Authentication Method: Password
@@ -77,14 +77,14 @@ You need an RPC endpoint to interact with the blockchain. Choose one:
      - Database User Privileges: "Read and write to any database"
      - Click "Add User"
    
-   - **Network Access:**
+   - Network Access:
      - Click "Network Access" in left menu
      - Click "Add IP Address"
      - For development: Click "Allow Access from Anywhere" (0.0.0.0/0)
      - For production: Add specific IP addresses
      - Click "Confirm"
 
-4. **Get Connection String**
+4. Get Connection String
    - Click "Database" in left menu
    - Click "Connect" on your cluster
    - Select "Connect your application"
@@ -94,13 +94,13 @@ You need an RPC endpoint to interact with the blockchain. Choose one:
    - Replace `<username>` and `<password>` with your credentials
    - Add database name: `mongodb+srv://username:password@cluster.mongodb.net/blockchain-documents?retryWrites=true&w=majority`
 
-5. **Add to Configuration**
+5. Add to Setting Things Up
    ```env
-   # backend/.env
+   backend/.env
    MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/blockchain-documents?retryWrites=true&w=majority
    ```
 
-### Tips
+Tips
 - Enable automatic backups (paid feature, but good for production)
 - Monitor storage usage in Atlas dashboard
 - Set up alerts at 80% storage capacity
@@ -108,13 +108,13 @@ You need an RPC endpoint to interact with the blockchain. Choose one:
 
 ---
 
-## 3. IPFS Storage Providers
+3. IPFS Storage Providers
 
 Set up all three for automatic fallback:
 
-### A. Web3.Storage (Primary - Unlimited Free)
+A. Web3.Storage (Primary - Unlimited Free)
 
-**Free Tier:** Unlimited storage and bandwidth
+Free Tier: Unlimited storage and bandwidth
 
 1. Visit https://web3.storage
 2. Sign up with email or GitHub
@@ -126,16 +126,16 @@ Set up all three for automatic fallback:
    WEB3_STORAGE_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
    ```
 
-**Features:**
+Features:
 - Unlimited storage
 - Unlimited bandwidth
 - Content addressing (CID)
 - Automatic IPFS pinning
 - No credit card required
 
-### B. Pinata (Fallback - 1GB Free)
+B. Pinata (Fallback - 1GB Free)
 
-**Free Tier:** 1GB storage, unlimited bandwidth
+Free Tier: 1GB storage, unlimited bandwidth
 
 1. Visit https://www.pinata.cloud
 2. Sign up for free account
@@ -150,15 +150,15 @@ Set up all three for automatic fallback:
    PINATA_SECRET_API_KEY=your_secret_key_here
    ```
 
-**Features:**
+Features:
 - 1GB free storage
 - Unlimited bandwidth
 - Pin management dashboard
 - Dedicated gateways (paid)
 
-### C. NFT.Storage (Secondary Fallback - Unlimited Free)
+C. NFT.Storage (Secondary Fallback - Unlimited Free)
 
-**Free Tier:** Unlimited storage for NFT data
+Free Tier: Unlimited storage for NFT data
 
 1. Visit https://nft.storage
 2. Sign up with email or GitHub
@@ -171,18 +171,18 @@ Set up all three for automatic fallback:
    NFT_STORAGE_API_KEY=your_token_here
    ```
 
-**Features:**
+Features:
 - Unlimited storage
 - Designed for NFT metadata
 - Free forever
 - Filecoin backing
 
-### IPFS Gateway
+IPFS Gateway
 
 For retrieving files, use public gateways:
 
 ```env
-# backend/.env
+backend/.env
 IPFS_GATEWAY_URL=https://ipfs.io/ipfs/
 ```
 
@@ -193,65 +193,65 @@ Alternative gateways:
 
 ---
 
-## 4. Testnet Faucets
+4. Testnet Faucets
 
 Get free testnet ETH for deploying contracts:
 
-### Sepolia Testnet Faucets
+Sepolia Testnet Faucets
 
-**You need ~0.1 ETH for deployment**
+You need ~0.1 ETH for deployment
 
-1. **Alchemy Sepolia Faucet** (Recommended)
+1. Alchemy Sepolia Faucet (Recommended)
    - URL: https://www.alchemy.com/faucets/ethereum-sepolia
    - Amount: 0.5 ETH/day
-   - Requirements: Alchemy account
+   - What You Need: Alchemy account
    - Steps:
      1. Sign in to Alchemy
      2. Enter your wallet address
      3. Complete captcha
      4. Receive ETH in 1-2 minutes
 
-2. **Sepolia Faucet**
+2. Sepolia Faucet
    - URL: https://sepoliafaucet.com
    - Amount: 0.5 ETH/day
-   - Requirements: Alchemy account
+   - What You Need: Alchemy account
    - Similar process to above
 
-3. **QuickNode Faucet**
+3. QuickNode Faucet
    - URL: https://faucet.quicknode.com/ethereum/sepolia
    - Amount: 0.05 ETH/day
-   - Requirements: Twitter account
+   - What You Need: Twitter account
    - Steps:
      1. Connect Twitter
      2. Tweet about QuickNode
      3. Enter wallet address
      4. Receive ETH
 
-4. **Infura Faucet**
+4. Infura Faucet
    - URL: https://www.infura.io/faucet/sepolia
    - Amount: 0.5 ETH/day
-   - Requirements: Infura account
+   - What You Need: Infura account
 
-### Mumbai Testnet Faucets (Polygon)
+Mumbai Testnet Faucets (Polygon)
 
 If using Mumbai instead of Sepolia:
 
-1. **Polygon Faucet**
+1. Polygon Faucet
    - URL: https://faucet.polygon.technology
    - Amount: 0.5 MATIC
-   - Requirements: None
+   - What You Need: None
    - Steps:
      1. Select "Mumbai"
      2. Enter wallet address
      3. Complete captcha
      4. Receive MATIC
 
-2. **Alchemy Mumbai Faucet**
+2. Alchemy Mumbai Faucet
    - URL: https://www.alchemy.com/faucets/polygon-mumbai
    - Amount: 0.5 MATIC/day
-   - Requirements: Alchemy account
+   - What You Need: Alchemy account
 
-### Tips
+Tips
 - Request from multiple faucets if needed
 - Save some ETH for future transactions
 - Testnet ETH has no real value
@@ -259,17 +259,17 @@ If using Mumbai instead of Sepolia:
 
 ---
 
-## 5. Hosting Services
+5. Hosting Services
 
-### A. Vercel (Frontend Hosting)
+A. Vercel (Frontend Hosting)
 
-**Free Tier:** Unlimited bandwidth, 100GB/month
+Free Tier: Unlimited bandwidth, 100GB/month
 
-1. **Create Account**
+1. Create Account
    - Visit https://vercel.com
    - Sign up with GitHub
 
-2. **Import Project**
+2. Import Project
    - Click "Add New" > "Project"
    - Select your GitHub repository
    - Framework Preset: "Create React App"
@@ -277,7 +277,7 @@ If using Mumbai instead of Sepolia:
    - Build Command: `npm run build`
    - Output Directory: `build`
 
-3. **Configure Environment Variables**
+3. Configure Environment Variables
    - Go to project settings
    - Click "Environment Variables"
    - Add all variables from `frontend/.env`:
@@ -289,58 +289,58 @@ If using Mumbai instead of Sepolia:
      REACT_APP_ACCESS_CONTROL_ADDRESS=0x...
      ```
 
-4. **Deploy**
+4. Deploy
    - Click "Deploy"
    - Wait 2-5 minutes
    - Get your URL: `https://your-app.vercel.app`
 
-**Features:**
+Features:
 - Automatic deployments on git push
 - Preview deployments for PRs
 - Custom domains (free)
 - Edge network (fast globally)
 - Analytics (paid)
 
-### B. Railway (Backend Hosting)
+B. Railway (Backend Hosting)
 
-**Free Tier:** 500 hours/month, 512MB RAM, 1GB storage
+Free Tier: 500 hours/month, 512MB RAM, 1GB storage
 
-1. **Create Account**
+1. Create Account
    - Visit https://railway.app
    - Sign up with GitHub
 
-2. **Create New Project**
+2. Create New Project
    - Click "New Project"
    - Select "Deploy from GitHub repo"
    - Choose your repository
 
-3. **Configure Service**
+3. Configure Service
    - Click "Add Service" > "GitHub Repo"
    - Root Directory: `backend`
    - Build Command: `npm install`
    - Start Command: `npm start`
 
-4. **Add Environment Variables**
+4. Add Environment Variables
    - Click on service
    - Go to "Variables" tab
    - Add all variables from `backend/.env`
    - Railway provides a MongoDB plugin if needed
 
-5. **Deploy**
+5. Deploy
    - Railway auto-deploys
    - Get your URL from "Settings" > "Domains"
    - Format: `https://your-app.railway.app`
 
-**Features:**
+Features:
 - Automatic deployments
 - Built-in databases (paid)
 - Logs and metrics
 - Custom domains
 - Sleeps after inactivity (free tier)
 
-### Alternative: Render
+Alternative: Render
 
-**Free Tier:** 750 hours/month, 512MB RAM
+Free Tier: 750 hours/month, 512MB RAM
 
 1. Visit https://render.com
 2. Sign up with GitHub
@@ -353,15 +353,15 @@ If using Mumbai instead of Sepolia:
 6. Add environment variables
 7. Deploy
 
-**Note:** Render free tier sleeps after 15 minutes of inactivity
+Note: Render free tier sleeps after 15 minutes of inactivity
 
 ---
 
-## 6. Optional Services
+6. Optional Services
 
-### A. Etherscan API (Contract Verification)
+A. Etherscan API (Contract Verification)
 
-**Free Tier:** 5 requests/second
+Free Tier: 5 requests/second
 
 1. Visit https://etherscan.io
 2. Sign up for account
@@ -372,14 +372,14 @@ If using Mumbai instead of Sepolia:
    ETHERSCAN_API_KEY=your_api_key_here
    ```
 
-**Benefits:**
+Benefits:
 - Verify contracts on Etherscan
 - Users can read contract code
 - Increases trust and transparency
 
-### B. GitHub Actions (CI/CD)
+B. GitHub Actions (CI/CD)
 
-**Free Tier:** 2,000 minutes/month for private repos, unlimited for public
+Free Tier: 2,000 minutes/month for private repos, unlimited for public
 
 1. Already configured in `.github/workflows/`
 2. Add secrets to GitHub repository:
@@ -392,9 +392,9 @@ If using Mumbai instead of Sepolia:
      - `VERCEL_TOKEN` (from Vercel settings)
      - All `REACT_APP_*` variables
 
-### C. Sentry (Error Tracking)
+C. Sentry (Error Tracking)
 
-**Free Tier:** 5,000 events/month
+Free Tier: 5,000 events/month
 
 1. Visit https://sentry.io
 2. Sign up for free
@@ -404,18 +404,18 @@ If using Mumbai instead of Sepolia:
 
 ---
 
-## Configuration Checklist
+Setting Things Up Checklist
 
-After setting up all services, verify your configuration:
+After setting up all services, verify your Setting Things Up:
 
-### Contracts Configuration
+Contracts Setting Things Up
 - [ ] `contracts/.env` created
 - [ ] `SEPOLIA_URL` set (Infura or Alchemy)
 - [ ] `PRIVATE_KEY` set (from MetaMask)
 - [ ] `ETHERSCAN_API_KEY` set (optional)
 - [ ] Wallet funded with testnet ETH
 
-### Backend Configuration
+Backend Setting Things Up
 - [ ] `backend/.env` created
 - [ ] `MONGODB_URI` set (Atlas connection string)
 - [ ] `ETHEREUM_RPC_URL` set
@@ -425,13 +425,13 @@ After setting up all services, verify your configuration:
 - [ ] `JWT_SECRET` set (generate random string)
 - [ ] Contract addresses set (after deployment)
 
-### Frontend Configuration
+Frontend Setting Things Up
 - [ ] `frontend/.env` created
 - [ ] `REACT_APP_API_URL` set (Railway backend URL)
 - [ ] `REACT_APP_CHAIN_ID` set (11155111 for Sepolia)
 - [ ] Contract addresses set (after deployment)
 
-### Hosting Configuration
+Hosting Setting Things Up
 - [ ] Vercel project created and connected
 - [ ] Railway project created and connected
 - [ ] Environment variables added to both
@@ -439,7 +439,7 @@ After setting up all services, verify your configuration:
 
 ---
 
-## Cost Summary
+Cost Summary
 
 | Service | Free Tier | Upgrade Cost |
 |---------|-----------|--------------|
@@ -451,36 +451,36 @@ After setting up all services, verify your configuration:
 | Vercel | Unlimited | $20/month (Pro) |
 | Railway | 500 hours/month | $5/month (Hobby) |
 | Sepolia Testnet | Free | N/A (testnet) |
-| **Total** | **$0/month** | **~$50/month** (if all upgraded) |
+| Total | $0/month | ~$50/month (if all upgraded) |
 
-**For production on Polygon mainnet:**
+For production on Polygon mainnet:
 - Transaction cost: ~$0.01 per document
 - 100 documents/month: ~$1-2/month
 - 1000 documents/month: ~$10-20/month
 
 ---
 
-## Troubleshooting
+Troubleshooting
 
-### MongoDB Connection Issues
+MongoDB Connection Issues
 - Check IP whitelist (use 0.0.0.0/0 for testing)
 - Verify username and password
 - Ensure database name is in connection string
 - Check if cluster is active
 
-### IPFS Upload Failures
+IPFS Upload Failures
 - Verify API keys are correct
 - Check API key permissions
 - Try different provider
 - Check network connectivity
 
-### Blockchain Transaction Failures
+Blockchain Transaction Failures
 - Ensure wallet has enough testnet ETH
 - Verify RPC URL is correct
 - Check network (Sepolia vs Mumbai)
 - Increase gas limit if needed
 
-### Deployment Failures
+Deployment Failures
 - Check build logs in Vercel/Railway
 - Verify all environment variables are set
 - Check Node.js version compatibility
@@ -488,7 +488,7 @@ After setting up all services, verify your configuration:
 
 ---
 
-## Next Steps
+Next Steps
 
 After setting up all services:
 
@@ -500,3 +500,4 @@ After setting up all services:
 6. Monitor logs and metrics
 
 For detailed deployment instructions, see [DEPLOYMENT.md](../DEPLOYMENT.md)
+

@@ -1,47 +1,47 @@
-# System Monitoring and Health Checks
+System Monitoring and Health Checks
 
 This document describes the comprehensive monitoring and health check system implemented for the Academic Document Blockchain Verification System.
 
-## Overview
+Overview
 
 The monitoring system provides real-time visibility into system health, performance metrics, security alerts, and service status. It includes automated health checks, performance tracking, error logging, and an admin dashboard for system oversight.
 
-## Features
+Features
 
-### 1. Health Check Endpoints
+1. Health Check Endpoints
 
-#### Public Health Check
-- **Endpoint**: `GET /health`
-- **Access**: Public
-- **Purpose**: Basic system health status
-- **Returns**: Overall status, uptime, service availability
+Public Health Check
+- Endpoint: `GET /health`
+- Access: Public
+- Purpose: Basic system health status
+- Returns: Overall status, uptime, service availability
 
-#### Comprehensive Health Check
-- **Endpoint**: `GET /api/monitoring/health`
-- **Access**: Public (basic) / Admin (detailed)
-- **Purpose**: Detailed health status of all services
-- **Checks**:
+Comprehensive Health Check
+- Endpoint: `GET /api/monitoring/health`
+- Access: Public (basic) / Admin (detailed)
+- Purpose: Detailed health status of all services
+- Checks:
   - IPFS provider availability
   - Blockchain node connectivity
   - Database connection status
   - Cache service status
   - System resource usage (admin only)
 
-### 2. Service-Specific Health Checks
+2. Service-Specific Health Checks
 
-#### IPFS Health
-- **Endpoint**: `GET /api/monitoring/health/ipfs`
-- **Access**: Admin
-- **Monitors**:
+IPFS Health
+- Endpoint: `GET /api/monitoring/health/ipfs`
+- Access: Admin
+- Monitors:
   - Provider availability (Web3.Storage, Pinata, NFT.Storage)
   - Response times
   - Upload queue status
   - Enabled providers
 
-#### Blockchain Health
-- **Endpoint**: `GET /api/monitoring/health/blockchain`
-- **Access**: Admin
-- **Monitors**:
+Blockchain Health
+- Endpoint: `GET /api/monitoring/health/blockchain`
+- Access: Admin
+- Monitors:
   - Node connectivity
   - Current block number
   - Response time
@@ -49,23 +49,23 @@ The monitoring system provides real-time visibility into system health, performa
   - Wallet balance
   - Contract initialization status
 
-#### Database Health
-- **Endpoint**: `GET /api/monitoring/health/database`
-- **Access**: Admin
-- **Monitors**:
+Database Health
+- Endpoint: `GET /api/monitoring/health/database`
+- Access: Admin
+- Monitors:
   - Connection status
   - Collection count
   - Data size
   - Storage size
   - Index count
 
-### 3. Performance Metrics
+3. Performance Metrics
 
-#### Metrics Collection
-- **Endpoint**: `GET /api/monitoring/metrics`
-- **Access**: Admin
-- **Time Ranges**: 1h, 24h, 7d, 30d
-- **Tracks**:
+Metrics Collection
+- Endpoint: `GET /api/monitoring/metrics`
+- Access: Admin
+- Time Ranges: 1h, 24h, 7d, 30d
+- Tracks:
   - Response times
   - Memory usage
   - CPU usage
@@ -75,7 +75,7 @@ The monitoring system provides real-time visibility into system health, performa
   - Error rates
   - Request rates
 
-#### Automatic Metric Recording
+Automatic Metric Recording
 The system automatically records:
 - API response times
 - Error occurrences
@@ -83,9 +83,9 @@ The system automatically records:
 - Database connection status
 - Service availability
 
-### 4. Security Alerts
+4. Security Alerts
 
-#### Alert Types
+Alert Types
 - Brute force attempts
 - Suspicious login patterns
 - Multiple failed attempts
@@ -99,31 +99,31 @@ The system automatically records:
 - Database connection failures
 - Blockchain interaction failures
 
-#### Alert Management
-- **Endpoint**: `GET /api/monitoring/alerts`
-- **Access**: Admin
-- **Features**:
+Alert Management
+- Endpoint: `GET /api/monitoring/alerts`
+- Access: Admin
+- Features:
   - Filter by severity (low, medium, high, critical)
   - Filter by status (open, investigating, resolved)
   - Filter by alert type
   - Automatic alert cooldowns to prevent spam
   - Alert notifications for high/critical issues
 
-#### Update Alerts
-- **Endpoint**: `PUT /api/monitoring/alerts/:alertId`
-- **Access**: Admin
-- **Actions**:
+Update Alerts
+- Endpoint: `PUT /api/monitoring/alerts/:alertId`
+- Access: Admin
+- Actions:
   - Mark as resolved
   - Mark as investigating
   - Mark as false positive
   - Add resolution notes
 
-### 5. System Information
+5. System Information
 
-#### Resource Usage
-- **Endpoint**: `GET /api/monitoring/system`
-- **Access**: Admin
-- **Provides**:
+Resource Usage
+- Endpoint: `GET /api/monitoring/system`
+- Access: Admin
+- Provides:
   - Memory usage (heap, RSS, external)
   - CPU usage
   - Process uptime
@@ -131,40 +131,40 @@ The system automatically records:
   - Node.js version
   - Environment
 
-### 6. Logging
+6. Logging
 
-#### Log Access
-- **Endpoint**: `GET /api/monitoring/logs`
-- **Access**: Admin
-- **Types**:
+Log Access
+- Endpoint: `GET /api/monitoring/logs`
+- Access: Admin
+- Types:
   - Application logs (`app.log`)
   - Error logs (`error.log`)
-- **Features**:
+- Features:
   - Configurable line count
   - Real-time log viewing
   - Log rotation (automatic cleanup after 30 days)
 
-#### Log Levels
-- **INFO**: General information
-- **WARN**: Warning messages
-- **ERROR**: Error messages
-- **DEBUG**: Debug information (development only)
+Log Levels
+- INFO: General information
+- WARN: Warning messages
+- ERROR: Error messages
+- DEBUG: Debug information (development only)
 
-### 7. Admin Dashboard
+7. Admin Dashboard
 
-#### Dashboard Data
-- **Endpoint**: `GET /api/monitoring/dashboard`
-- **Access**: Admin
-- **Provides**:
+Dashboard Data
+- Endpoint: `GET /api/monitoring/dashboard`
+- Access: Admin
+- Provides:
   - System health summary
   - Recent alerts
   - System resource usage
   - Service status
   - Performance metrics
 
-#### Frontend Dashboard
-- **Component**: `AdminDashboard`
-- **Features**:
+Frontend Dashboard
+- Component: `AdminDashboard`
+- Features:
   - Real-time status overview
   - Auto-refresh (30 seconds)
   - Service health visualization
@@ -172,109 +172,109 @@ The system automatically records:
   - Color-coded status indicators
   - Responsive design
 
-## Health Status Levels
+Health Status Levels
 
-### Overall System Status
-- **healthy**: All services operational
-- **degraded**: Some services experiencing issues
-- **critical**: Major service failures
-- **error**: System error occurred
+Overall System Status
+- healthy: All services operational
+- degraded: Some services experiencing issues
+- critical: Major service failures
+- error: System error occurred
 
-### Service Status
-- **healthy**: Service fully operational
-- **degraded**: Service partially operational
-- **critical**: Service unavailable
-- **error**: Service error
+Service Status
+- healthy: Service fully operational
+- degraded: Service partially operational
+- critical: Service unavailable
+- error: Service error
 
-## Alert Severity Levels
+Alert Severity Levels
 
-- **low**: Minor issues, no immediate action required
-- **medium**: Issues requiring attention
-- **high**: Serious issues requiring prompt action
-- **critical**: Critical issues requiring immediate action
+- low: Minor issues, no immediate action required
+- medium: Issues requiring attention
+- high: Serious issues requiring prompt action
+- critical: Critical issues requiring immediate action
 
-## Automated Monitoring Tasks
+Automated Monitoring Tasks
 
-### Periodic Tasks
-1. **System Metrics Recording** (every 5 minutes)
+Periodic Tasks
+1. System Metrics Recording (every 5 minutes)
    - Memory usage
    - CPU usage
    - Database connection status
 
-2. **Metrics Cleanup** (every hour)
+2. Metrics Cleanup (every hour)
    - Remove metrics older than 30 days
 
-3. **Alert Cooldown Reset** (every hour)
+3. Alert Cooldown Reset (every hour)
    - Clear alert cooldowns to allow new alerts
 
-### Performance Thresholds
+Performance Thresholds
 - Response time: 5 seconds
 - Error rate: 5%
 - Failed login attempts: 5 in 15 minutes
 - Memory usage: 85%
 - CPU usage: 80%
 
-## Security Monitoring
+Security Monitoring
 
-### Brute Force Detection
+Brute Force Detection
 - Tracks failed authentication attempts per IP
 - Threshold: 5 attempts in 15 minutes
 - Creates high-severity alert
 
-### Suspicious Pattern Detection
+Suspicious Pattern Detection
 - SQL injection patterns
 - XSS patterns
 - Command injection patterns
 - Creates high-severity alert on detection
 
-### Rate Limiting
+Rate Limiting
 - Monitors request rates per IP
 - Threshold: 100 requests per minute
 - Creates medium-severity alert
 
-## Integration with Existing Services
+Integration with Existing Services
 
-### IPFS Service
+IPFS Service
 - Health check method: `checkIPFSHealth()`
 - Queue status: `getQueueStatus()`
 - Provider list: `getEnabledProviders()`
 
-### Blockchain Service
+Blockchain Service
 - Health check method: `healthCheck()`
 - Network info: `getNetworkInfo()`
 - Gas price monitoring
 - Block number tracking
 
-### Cache Service
+Cache Service
 - Health check: `healthCheck()`
 - Statistics: `getStats()`
 - Hit rate tracking
 
-### Database Service
+Database Service
 - Connection monitoring
 - Performance statistics
 - Query optimization tracking
 
-## Usage Examples
+Usage Examples
 
-### Check System Health
+Check System Health
 ```bash
 curl http://localhost:3001/api/monitoring/health
 ```
 
-### Get Performance Metrics (Last 24 Hours)
+Get Performance Metrics (Last 24 Hours)
 ```bash
 curl -H "Authorization: Bearer YOUR_TOKEN" \
   http://localhost:3001/api/monitoring/metrics?timeRange=24h
 ```
 
-### Get Active Alerts
+Get Active Alerts
 ```bash
 curl -H "Authorization: Bearer YOUR_TOKEN" \
   http://localhost:3001/api/monitoring/alerts?status=open&severity=critical
 ```
 
-### Resolve an Alert
+Resolve an Alert
 ```bash
 curl -X PUT \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -283,15 +283,15 @@ curl -X PUT \
   http://localhost:3001/api/monitoring/alerts/ALERT_ID
 ```
 
-### View Recent Logs
+View Recent Logs
 ```bash
 curl -H "Authorization: Bearer YOUR_TOKEN" \
   "http://localhost:3001/api/monitoring/logs?type=error&lines=50"
 ```
 
-## Frontend Integration
+Frontend Integration
 
-### Using the Monitoring Service
+Using the Monitoring Service
 ```javascript
 import monitoringService from './services/monitoringService';
 
@@ -309,7 +309,7 @@ const alerts = await monitoringService.getAlerts(token, {
 });
 ```
 
-### Using the Admin Dashboard Component
+Using the Admin Dashboard Component
 ```javascript
 import AdminDashboard from './components/AdminDashboard';
 
@@ -322,58 +322,58 @@ function App() {
 }
 ```
 
-## Best Practices
+Best Practices
 
-### For Administrators
+For Administrators
 1. Check the dashboard regularly
 2. Respond to critical alerts promptly
 3. Review error logs weekly
 4. Monitor resource usage trends
 5. Keep alert thresholds updated
 
-### For Developers
+For Developers
 1. Use appropriate log levels
 2. Include context in error messages
 3. Handle errors gracefully
 4. Monitor performance metrics
 5. Test health check endpoints
 
-## Troubleshooting
+Troubleshooting
 
-### High Memory Usage
+High Memory Usage
 1. Check for memory leaks
 2. Review recent code changes
 3. Restart the service if necessary
 4. Monitor for recurrence
 
-### Service Unavailable
+Service Unavailable
 1. Check service logs
 2. Verify network connectivity
 3. Check API keys and credentials
 4. Restart affected service
 
-### High Alert Volume
+High Alert Volume
 1. Review alert thresholds
 2. Check for false positives
 3. Investigate root cause
 4. Adjust monitoring rules if needed
 
-## Future Enhancements
+Future Enhancements
 
-1. **Email Notifications**: Send alerts via email
-2. **Slack Integration**: Post alerts to Slack channels
-3. **SMS Alerts**: Critical alerts via SMS
-4. **Grafana Integration**: Advanced visualization
-5. **Prometheus Metrics**: Export metrics for Prometheus
-6. **Custom Dashboards**: User-configurable dashboards
-7. **Historical Analysis**: Long-term trend analysis
-8. **Predictive Alerts**: ML-based anomaly detection
+1. Email Notifications: Send alerts via email
+2. Slack Integration: Post alerts to Slack channels
+3. SMS Alerts: Critical alerts via SMS
+4. Grafana Integration: Advanced visualization
+5. Prometheus Metrics: Export metrics for Prometheus
+6. Custom Dashboards: User-configurable dashboards
+7. Historical Analysis: Long-term trend analysis
+8. Predictive Alerts: ML-based anomaly detection
 
-## Configuration
+Setting Things Up
 
-### Environment Variables
+Environment Variables
 ```env
-# Monitoring Configuration
+Monitoring Setting Things Up
 MONITORING_ENABLED=true
 ALERT_EMAIL=admin@example.com
 ALERT_SLACK_WEBHOOK=https://hooks.slack.com/...
@@ -381,7 +381,7 @@ METRICS_RETENTION_DAYS=30
 LOG_LEVEL=info
 ```
 
-### Alert Thresholds
+Alert Thresholds
 Edit `backend/utils/monitoring.js` to adjust thresholds:
 ```javascript
 this.alertThresholds = {
@@ -394,7 +394,7 @@ this.alertThresholds = {
 };
 ```
 
-## Support
+Support
 
 For issues or questions about the monitoring system:
 1. Check the logs: `/api/monitoring/logs`
@@ -402,6 +402,7 @@ For issues or questions about the monitoring system:
 3. Check service health: `/api/monitoring/health`
 4. Contact system administrator
 
-## License
+License
 
 This monitoring system is part of the Academic Document Blockchain Verification System.
+

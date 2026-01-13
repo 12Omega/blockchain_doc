@@ -1,12 +1,12 @@
-# API Integration Guide
+API Integration Guide
 
-## Overview
+Overview
 
-This guide provides comprehensive information for integrating with the Blockchain Document Verification System API.
+Hey there! This guide provides comprehensive information for integrating with the Blockchain Document Verification System API.
 
-## Authentication
+Authentication
 
-### Wallet-Based Authentication
+Wallet-Based Authentication
 
 All API requests require wallet signature authentication:
 
@@ -23,7 +23,7 @@ headers: {
 }
 ```
 
-### API Key Authentication (Enterprise)
+API Key Authentication (Enterprise)
 
 For server-to-server integration:
 
@@ -34,17 +34,17 @@ headers: {
 }
 ```
 
-## Base URL
+Base URL
 
-- **Production**: `https://api.docverify.blockchain`
-- **Staging**: `https://staging-api.docverify.blockchain`
-- **Development**: `http://localhost:3001`
+- Production: `https://api.docverify.blockchain`
+- Staging: `https://staging-api.docverify.blockchain`
+- Development: `http://localhost:3001`
 
-## Core Endpoints
+Core Endpoints
 
-### Document Management
+Document Management
 
-#### Upload Document
+Upload Document
 
 ```http
 POST /api/documents/upload
@@ -62,7 +62,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
@@ -77,7 +77,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-#### Verify Document
+Verify Document
 
 ```http
 POST /api/documents/verify
@@ -88,7 +88,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
@@ -107,13 +107,13 @@ Content-Type: multipart/form-data
 }
 ```
 
-#### Get Document Details
+Get Document Details
 
 ```http
 GET /api/documents/{documentId}
 ```
 
-**Response:**
+Response:
 
 ```json
 {
@@ -132,15 +132,15 @@ GET /api/documents/{documentId}
 }
 ```
 
-### User Management
+User Management
 
-#### Get User Profile
+Get User Profile
 
 ```http
 GET /api/users/profile
 ```
 
-#### Update User Profile
+Update User Profile
 
 ```http
 PUT /api/users/profile
@@ -154,21 +154,21 @@ Content-Type: application/json
 }
 ```
 
-#### List User Documents
+List User Documents
 
 ```http
 GET /api/users/documents?page=1&limit=10&type=diploma
 ```
 
-### Verification History
+Verification History
 
-#### Get Verification History
+Get Verification History
 
 ```http
 GET /api/verifications?documentId=doc_123456789&page=1&limit=10
 ```
 
-**Response:**
+Response:
 
 ```json
 {
@@ -194,9 +194,9 @@ GET /api/verifications?documentId=doc_123456789&page=1&limit=10
 }
 ```
 
-## Webhooks
+Webhooks
 
-### Setting Up Webhooks
+Setting Up Webhooks
 
 Configure webhook endpoints to receive real-time notifications:
 
@@ -211,9 +211,9 @@ Content-Type: application/json
 }
 ```
 
-### Webhook Events
+Webhook Events
 
-#### Document Uploaded
+Document Uploaded
 
 ```json
 {
@@ -228,7 +228,7 @@ Content-Type: application/json
 }
 ```
 
-#### Document Verified
+Document Verified
 
 ```json
 {
@@ -242,9 +242,9 @@ Content-Type: application/json
 }
 ```
 
-## SDKs and Libraries
+SDKs and Libraries
 
-### JavaScript/Node.js SDK
+JavaScript/Node.js SDK
 
 ```bash
 npm install @docverify/sdk
@@ -265,7 +265,7 @@ const result = await sdk.documents.upload(file, metadata);
 const verification = await sdk.documents.verify(file);
 ```
 
-### Python SDK
+Python SDK
 
 ```bash
 pip install docverify-sdk
@@ -279,18 +279,18 @@ client = DocVerifyClient(
     base_url='https://api.docverify.blockchain'
 )
 
-# Upload document
+Upload document
 result = client.documents.upload(file_path, metadata)
 
-# Verify document
+Verify document
 verification = client.documents.verify(file_path)
 ```
 
-## Rate Limits
+Rate Limits
 
-- **Free Tier**: 100 requests per hour
-- **Pro Tier**: 1,000 requests per hour
-- **Enterprise**: Custom limits
+- Free Tier: 100 requests per hour
+- Pro Tier: 1,000 requests per hour
+- Enterprise: Custom limits
 
 Rate limit headers:
 
@@ -300,9 +300,9 @@ X-RateLimit-Remaining: 999
 X-RateLimit-Reset: 1640995200
 ```
 
-## Error Handling
+Error Handling
 
-### Error Response Format
+Error Response Format
 
 ```json
 {
@@ -318,7 +318,7 @@ X-RateLimit-Reset: 1640995200
 }
 ```
 
-### Common Error Codes
+Common Error Codes
 
 - `AUTHENTICATION_FAILED`: Invalid or missing authentication
 - `INSUFFICIENT_PERMISSIONS`: User lacks required permissions
@@ -327,17 +327,17 @@ X-RateLimit-Reset: 1640995200
 - `RATE_LIMIT_EXCEEDED`: Too many requests
 - `BLOCKCHAIN_ERROR`: Blockchain transaction failed
 
-## Testing
+Testing
 
-### Sandbox Environment
+Sandbox Environment
 
 Use the sandbox environment for testing:
 
-- **Base URL**: `https://sandbox-api.docverify.blockchain`
-- **Test Network**: Ethereum Sepolia testnet
-- **Test Tokens**: Available from faucet
+- Base URL: `https://sandbox-api.docverify.blockchain`
+- Test Network: Ethereum Sepolia testnet
+- Test Tokens: Available from faucet
 
-### Test Data
+Test Data
 
 Sample test documents and metadata are available in the SDK:
 
@@ -349,9 +349,9 @@ const testDoc = testData.sampleDiploma;
 const result = await sdk.documents.upload(testDoc.file, testDoc.metadata);
 ```
 
-## Best Practices
+Best Practices
 
-### Security
+Security
 
 - Always validate webhook signatures
 - Use HTTPS for all API calls
@@ -359,23 +359,24 @@ const result = await sdk.documents.upload(testDoc.file, testDoc.metadata);
 - Implement proper error handling
 - Log all API interactions for audit
 
-### Performance
+Performance
 
 - Implement caching for frequently accessed data
 - Use pagination for large result sets
 - Batch operations when possible
 - Monitor rate limits
 
-### Integration
+Integration
 
 - Handle network timeouts gracefully
 - Implement retry logic with exponential backoff
 - Validate all input data before API calls
 - Use appropriate HTTP status codes
 
-## Support
+Support
 
-- **Documentation**: https://docs.docverify.blockchain
-- **API Status**: https://status.docverify.blockchain
-- **Support Email**: [email]
-- **Developer Forum**: https://forum.docverify.blockchain
+- Documentation: https://docs.docverify.blockchain
+- API Status: https://status.docverify.blockchain
+- Support Email: [email]
+- Developer Forum: https://forum.docverify.blockchain
+

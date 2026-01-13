@@ -1,6 +1,6 @@
-# Student Guide - Academic Document Blockchain Verification System
+Student Guide - Academic Document Blockchain Verification System
 
-## Table of Contents
+Table of Contents
 1. [Introduction](#introduction)
 2. [Getting Started](#getting-started)
 3. [Accessing Your Documents](#accessing-your-documents)
@@ -10,23 +10,23 @@
 7. [Frequently Asked Questions](#frequently-asked-questions)
 8. [Troubleshooting](#troubleshooting)
 
-## Introduction
+Introduction
 
-Welcome to the Student Guide for the Academic Document Blockchain Verification System. This guide will help you understand how to access, manage, and share your blockchain-verified academic credentials.
+Welcome to the Student Guide for the Academic Document Blockchain Verification System. Hey there! This guide will help you understand how to access, manage, and share your blockchain-verified academic credentials.
 
-### What is Blockchain Verification?
+What is Blockchain Verification?
 
 Your academic documents (degrees, certificates, transcripts) are registered on a blockchain - a secure, tamper-proof digital ledger. This means:
 
-**Benefits for You:**
-- **Instant Verification**: Employers can verify your credentials in seconds
-- **Global Recognition**: Your documents can be verified from anywhere in the world
-- **Permanent Record**: Your credentials are stored permanently and cannot be lost
-- **No Forgery**: Blockchain technology prevents document tampering
-- **Easy Sharing**: Share your credentials with a simple link or QR code
-- **Privacy Control**: You decide who can access your documents
+Benefits for You:
+- Instant Verification: Employers can verify your credentials in seconds
+- Global Recognition: Your documents can be verified from anywhere in the world
+- Permanent Record: Your credentials are stored permanently and cannot be lost
+- No Forgery: Blockchain technology prevents document tampering
+- Easy Sharing: Share your credentials with a simple link or QR code
+- Privacy Control: You decide who can access your documents
 
-### How It Works
+How It Works
 
 ```
 1. Your Institution Issues Document
@@ -40,20 +40,20 @@ Your academic documents (degrees, certificates, transcripts) are registered on a
 5. They Verify Instantly
 ```
 
-### What You Need
+What You Need
 
-**Required:**
+Required:
 - Email address (provided by your institution)
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - Internet connection
 
-**Optional (for advanced features):**
+Optional (for advanced features):
 - MetaMask wallet (for blockchain interactions)
 - Smartphone (for QR code scanning)
 
-## Getting Started
+Getting Started
 
-### Step 1: Receive Your Document
+Step 1: Receive Your Document
 
 After your institution registers your document, you'll receive an email:
 
@@ -87,62 +87,62 @@ Best regards,
 University of Technology
 ```
 
-### Step 2: Download Your Document
+Step 2: Download Your Document
 
-1. **Click Download Link:**
+1. Click Download Link:
    - Open the email from your institution
    - Click "Download Document"
    - File downloads to your computer
 
-2. **Save Securely:**
+2. Save Securely:
    - Create a folder: "Academic Documents"
    - Save with clear name: "Degree_ComputerScience_2023.pdf"
    - Make backup copies (cloud storage, USB drive)
 
-3. **Verify QR Code:**
+3. Verify QR Code:
    - Open the PDF
    - Look for QR code (usually bottom right corner)
    - QR code contains verification information
 
-### Step 3: Create Student Portal Account (Optional)
+Step 3: Create Student Portal Account (Optional)
 
 For advanced features like access management:
 
-1. **Visit Student Portal:**
+1. Visit Student Portal:
    - Click link in email
    - Or visit: https://portal.blockchain-docs.com
 
-2. **Sign Up:**
+2. Sign Up:
    - Enter your email (use institution email)
    - Create strong password
    - Verify email address
 
-3. **Connect Wallet (Optional):**
+3. Connect Wallet (Optional):
    - Install MetaMask browser extension
    - Create wallet or import existing
    - Connect to student portal
    - Sign authentication message
 
-4. **Complete Profile:**
+4. Complete Profile:
    - Add your name
    - Upload profile picture
    - Add contact information
    - Set notification preferences
 
-## Accessing Your Documents
+Accessing Your Documents
 
-### Via Student Portal
+Via Student Portal
 
-1. **Log In:**
+1. Log In:
    - Visit student portal
    - Enter email and password
    - Or connect with MetaMask
 
-2. **View Documents:**
+2. View Documents:
    - Dashboard shows all your documents
    - Click on any document to view details
 
-3. **Document List:**
+3. Document List:
    ```
    My Documents
    
@@ -163,7 +163,7 @@ For advanced features like access management:
    └──────────────────────────────────────────────────────┘
    ```
 
-### Document Details
+Document Details
 
 Click on a document to see full details:
 
@@ -202,49 +202,49 @@ Access Control
 └── Access Logs: View detailed logs
 ```
 
-### Downloading Documents
+Downloading Documents
 
-1. **From Portal:**
+1. From Portal:
    - Click "Download" button
    - Choose format:
      - PDF with QR code (recommended)
      - Original PDF
      - Verification certificate
 
-2. **From Email:**
+2. From Email:
    - Use download link in notification email
    - Link valid for 30 days
    - Request new link if expired
 
-3. **Multiple Copies:**
+3. Multiple Copies:
    - Download as many times as needed
    - Each copy has same verification QR code
    - All copies are equally valid
 
-## Sharing Documents
+Sharing Documents
 
-### Method 1: Share Verification Link
+Method 1: Share Verification Link
 
-**Best for:** Online applications, email submissions
+Best for: Online applications, email submissions
 
-1. **Get Link:**
+1. Get Link:
    - Open document in portal
    - Click "Share" button
    - Click "Copy Verification Link"
 
-2. **Share Link:**
+2. Share Link:
    - Paste in email to employer
    - Add to online application
    - Include in LinkedIn profile
    - Share on professional networks
 
-3. **What Recipients See:**
+3. What Recipients See:
    - Click link to view verification page
    - See all document details
    - Verify authenticity instantly
    - No account required
 
-**Example Email to Employer:**
+Example Email to Employer:
 ```
 Dear Hiring Manager,
 
@@ -260,56 +260,56 @@ Best regards,
 [Your Name]
 ```
 
-### Method 2: Share QR Code
+Method 2: Share QR Code
 
-**Best for:** Physical applications, in-person interviews
+Best for: Physical applications, in-person interviews
 
-1. **Print Document:**
+1. Print Document:
    - Download PDF with QR code
    - Print on quality paper
    - Ensure QR code is clear and scannable
 
-2. **Recipient Scans:**
+2. Recipient Scans:
    - Use smartphone camera
    - Or QR code scanner app
    - Automatically opens verification page
 
-3. **Verification Result:**
+3. Verification Result:
    - Instant confirmation
    - Shows all document details
    - Displays blockchain proof
 
-### Method 3: Upload Document File
+Method 3: Upload Document File
 
-**Best for:** Formal applications, background checks
+Best for: Formal applications, background checks
 
-1. **Download Document:**
+1. Download Document:
    - Get PDF from portal or email
    - Ensure it's the original file
    - Don't modify or edit the file
 
-2. **Upload to Verifier:**
+2. Upload to Verifier:
    - Employer/university uploads to verification portal
    - System computes document hash
    - Compares with blockchain record
    - Shows verification result
 
-3. **Important:**
+3. Important:
    - File must be exact original
    - Any modification invalidates verification
    - Don't compress, convert, or edit
    - Don't add annotations or signatures
 
-### Method 4: Grant Direct Access
+Method 4: Grant Direct Access
 
-**Best for:** Ongoing relationships, multiple verifications
+Best for: Ongoing relationships, multiple verifications
 
-1. **Open Document:**
+1. Open Document:
    - Go to student portal
    - Select document
    - Click "Manage Access"
 
-2. **Grant Access:**
+2. Grant Access:
    - Click "Grant Access"
    - Enter recipient information:
      ```
@@ -320,29 +320,29 @@ Best regards,
      Purpose: Employment Verification
      ```
 
-3. **Permissions:**
+3. Permissions:
    - View document details
    - Download document
    - View verification history
    - Receive verification notifications
 
-4. **Recipient Receives:**
+4. Recipient Receives:
    - Email with access link
    - Can view document anytime
    - Access logged in your audit trail
 
-## Managing Access
+Managing Access
 
-### Viewing Access Logs
+Viewing Access Logs
 
 See who has accessed your documents:
 
-1. **Open Document:**
+1. Open Document:
    - Go to student portal
    - Select document
    - Click "Access Logs"
 
-2. **Log Details:**
+2. Log Details:
    ```
    Access History
    
@@ -363,58 +363,58 @@ See who has accessed your documents:
    └──────────────────────────────────────────────────────┘
    ```
 
-3. **Filter Logs:**
+3. Filter Logs:
    - By date range
    - By organization
    - By action type (view, download, verify)
    - By location
 
-### Revoking Access
+Revoking Access
 
 Remove access from specific organizations:
 
-1. **View Granted Access:**
+1. View Granted Access:
    - Open document
    - Click "Manage Access"
    - See list of organizations with access
 
-2. **Revoke Access:**
+2. Revoke Access:
    - Click "Revoke" next to organization
    - Confirm revocation
    - Organization loses access immediately
 
-3. **Effects:**
+3. Effects:
    - Can no longer view document details
    - Cannot download document
    - Previous verifications remain in logs
    - Organization is notified of revocation
 
-### Setting Access Expiration
+Setting Access Expiration
 
 Automatically expire access after a period:
 
-1. **When Granting Access:**
+1. When Granting Access:
    - Set expiration date
    - Options: 7 days, 30 days, 90 days, 1 year, permanent
 
-2. **Automatic Expiration:**
+2. Automatic Expiration:
    - Access automatically revoked after period
    - You receive notification
    - Organization receives notification
    - Can re-grant if needed
 
-3. **Extend Access:**
+3. Extend Access:
    - Before expiration, click "Extend"
    - Choose new expiration date
    - Organization continues access
 
-## Understanding Verification
+Understanding Verification
 
-### What Employers See
+What Employers See
 
 When someone verifies your document:
 
-1. **Verification Page:**
+1. Verification Page:
    ```
    ✓ DOCUMENT VERIFIED
    
@@ -447,131 +447,131 @@ When someone verifies your document:
    - Contact: registrar@university.edu
    ```
 
-2. **Blockchain Proof:**
+2. Blockchain Proof:
    - Link to blockchain explorer
    - Shows transaction details
    - Proves document registration
    - Displays timestamp
 
-3. **What They Cannot See:**
+3. What They Cannot See:
    - Your wallet address (if you have one)
    - Your personal contact information (unless you share)
    - Other documents you own
    - Your access logs
 
-### Verification Methods
+Verification Methods
 
 Employers can verify your document three ways:
 
-1. **QR Code Scan:**
+1. QR Code Scan:
    - Fastest method
    - Scan with smartphone
    - Instant result
    - Works offline (basic verification)
 
-2. **Verification Link:**
+2. Verification Link:
    - Click link you provide
    - Opens verification page
    - Shows all details
    - Requires internet
 
-3. **File Upload:**
+3. File Upload:
    - Upload your PDF
    - System computes hash
    - Compares with blockchain
    - Most thorough verification
 
-### Verification Status
+Verification Status
 
 Your document can have different statuses:
 
-- **✓ Verified**: Document is authentic and active
-- **⚠️ Expired**: Document has passed expiration date
-- **❌ Revoked**: Institution has revoked the document
-- **🔄 Pending**: Blockchain confirmation in progress
+- ✓ Verified: Document is authentic and active
+- ⚠️ Expired: Document has passed expiration date
+- ❌ Revoked: Institution has revoked the document
+- 🔄 Pending: Blockchain confirmation in progress
 
-## Frequently Asked Questions
+Frequently Asked Questions
 
-### General Questions
+General Questions
 
-**Q: Is my document secure on the blockchain?**
+Q: Is my document secure on the blockchain?
 A: Yes, very secure. The document itself is encrypted and stored on IPFS. Only the document's cryptographic hash (fingerprint) is on the blockchain. This means your document cannot be accessed without permission, but anyone can verify its authenticity.
 
-**Q: Can my document be tampered with or forged?**
+Q: Can my document be tampered with or forged?
 A: No. Once registered on the blockchain, the record is permanent and cannot be changed. Any modification to the document would change its hash, making it immediately detectable.
 
-**Q: Do I need cryptocurrency to use this system?**
+Q: Do I need cryptocurrency to use this system?
 A: No. As a student, you don't need any cryptocurrency. Your institution handles all blockchain transactions. You only need cryptocurrency if you want to perform advanced operations like transferring document ownership.
 
-**Q: What if I lose my document file?**
+Q: What if I lose my document file?
 A: You can always download it again from the student portal or request it from your institution. The blockchain record is permanent, so your credentials are never truly lost.
 
-**Q: Can I edit or update my document?**
+Q: Can I edit or update my document?
 A: No, blockchain records are immutable. If there's an error, your institution must issue a corrected document and register it as a new document. The original remains in the blockchain for audit purposes.
 
-**Q: How long does verification take?**
+Q: How long does verification take?
 A: Instant! Verification happens in seconds. The blockchain lookup is nearly instantaneous.
 
-**Q: Is this recognized internationally?**
+Q: Is this recognized internationally?
 A: Yes. Blockchain verification works globally. Any employer or institution worldwide can verify your credentials instantly, regardless of location.
 
-**Q: What happens if the website goes down?**
+Q: What happens if the website goes down?
 A: Your documents are safe. The blockchain record is permanent and distributed across thousands of computers. Even if the website is down, the blockchain record remains, and verification can be done through alternative methods.
 
-### Privacy Questions
+Privacy Questions
 
-**Q: Who can see my documents?**
+Q: Who can see my documents?
 A: Only people you explicitly share with can see your document details. The blockchain only contains a hash (fingerprint) of your document, not the document itself. Anyone can verify the hash, but they need the actual document to do so.
 
-**Q: Can I control who verifies my documents?**
+Q: Can I control who verifies my documents?
 A: You can't prevent verification (that's the point - employers need to verify), but you control who has direct access to your documents through the portal. All verifications are logged so you can see who verified your credentials.
 
-**Q: Is my personal information on the blockchain?**
+Q: Is my personal information on the blockchain?
 A: Only basic information like your name, student ID, and document details are on the blockchain. Sensitive information like your date of birth, address, or social security number are NOT on the blockchain.
 
-**Q: Can I delete my documents?**
+Q: Can I delete my documents?
 A: The blockchain record cannot be deleted (that's what makes it tamper-proof). However, you can request your institution to mark the document as revoked, and you can delete your account from the portal.
 
-### Technical Questions
+Technical Questions
 
-**Q: What blockchain is used?**
+Q: What blockchain is used?
 A: The system uses Ethereum (Sepolia testnet for testing, mainnet for production) or Polygon. These are well-established, secure blockchain networks.
 
-**Q: What is IPFS?**
+Q: What is IPFS?
 A: IPFS (InterPlanetary File System) is a decentralized storage network where your encrypted documents are stored. It's like cloud storage, but distributed across many computers for redundancy and security.
 
-**Q: What is a document hash?**
+Q: What is a document hash?
 A: A hash is a unique cryptographic fingerprint of your document. Even a tiny change to the document creates a completely different hash. This is how we detect tampering.
 
-**Q: Do I need to pay gas fees?**
+Q: Do I need to pay gas fees?
 A: No. Your institution pays the gas fees (blockchain transaction costs) when registering your document. You don't pay anything.
 
-**Q: What if I want to transfer my document to someone else?**
+Q: What if I want to transfer my document to someone else?
 A: Document ownership can be transferred, but this requires blockchain interaction and should only be done with your institution's approval. Contact your institution for guidance.
 
-### Sharing Questions
+Sharing Questions
 
-**Q: How many times can I share my document?**
+Q: How many times can I share my document?
 A: Unlimited. You can share your verification link or QR code as many times as you want with as many people as you want.
 
-**Q: Can I share with multiple employers at once?**
+Q: Can I share with multiple employers at once?
 A: Yes. Each employer can verify independently. There's no limit to how many organizations can verify your document.
 
-**Q: What if an employer doesn't understand blockchain verification?**
+Q: What if an employer doesn't understand blockchain verification?
 A: The verification process is designed to be simple. They just click your link or scan your QR code. The verification page explains everything clearly. You can also direct them to the verifier guide.
 
-**Q: Can I customize what information is shared?**
+Q: Can I customize what information is shared?
 A: The verification shows all information registered on the blockchain. You cannot hide specific fields. However, you can choose whether to grant direct portal access (which shows more details) or just share the verification link (which shows basic information).
 
-## Troubleshooting
+Troubleshooting
 
-### Cannot Access Student Portal
+Cannot Access Student Portal
 
-**Problem:** Can't log in to student portal
+Problem: Can't log in to student portal
 
-**Solutions:**
+Solutions:
 
-1. **Forgot Password:**
+1. Forgot Password:
    ```
    - Click "Forgot Password"
    - Enter your email
@@ -579,7 +579,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Create new password
    ```
 
-2. **Email Not Recognized:**
+2. Email Not Recognized:
    ```
    - Verify you're using institution email
    - Check for typos
@@ -587,7 +587,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Try alternative email if you have multiple
    ```
 
-3. **Account Not Found:**
+3. Account Not Found:
    ```
    - Your institution may not have created your account yet
    - Contact institution registrar
@@ -595,13 +595,13 @@ A: The verification shows all information registered on the blockchain. You cann
    - Request account creation
    ```
 
-### Cannot Download Document
+Cannot Download Document
 
-**Problem:** Download link doesn't work or file won't open
+Problem: Download link doesn't work or file won't open
 
-**Solutions:**
+Solutions:
 
-1. **Expired Link:**
+1. Expired Link:
    ```
    - Download links expire after 30 days
    - Log in to student portal
@@ -609,7 +609,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Or request new link from institution
    ```
 
-2. **File Won't Open:**
+2. File Won't Open:
    ```
    - Ensure you have PDF reader installed
    - Try different PDF reader (Adobe, Chrome, Firefox)
@@ -617,7 +617,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Check file isn't corrupted
    ```
 
-3. **Download Fails:**
+3. Download Fails:
    ```
    - Check internet connection
    - Try different browser
@@ -625,13 +625,13 @@ A: The verification shows all information registered on the blockchain. You cann
    - Clear browser cache
    ```
 
-### QR Code Not Scanning
+QR Code Not Scanning
 
-**Problem:** QR code won't scan or gives error
+Problem: QR code won't scan or gives error
 
-**Solutions:**
+Solutions:
 
-1. **Improve Scan Conditions:**
+1. Improve Scan Conditions:
    ```
    - Ensure good lighting
    - Hold phone steady
@@ -639,7 +639,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Try different angle
    ```
 
-2. **QR Code Quality:**
+2. QR Code Quality:
    ```
    - Print at higher resolution
    - Ensure QR code isn't damaged
@@ -647,7 +647,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Regenerate QR code from portal
    ```
 
-3. **Scanner Issues:**
+3. Scanner Issues:
    ```
    - Try different QR scanner app
    - Use built-in camera app
@@ -655,20 +655,20 @@ A: The verification shows all information registered on the blockchain. You cann
    - Try on different device
    ```
 
-4. **Alternative:**
+4. Alternative:
    ```
    - Use verification link instead
    - Manually enter document hash
    - Upload document file for verification
    ```
 
-### Verification Shows Wrong Information
+Verification Shows Wrong Information
 
-**Problem:** Verification page shows incorrect details
+Problem: Verification page shows incorrect details
 
-**Solutions:**
+Solutions:
 
-1. **Check Document:**
+1. Check Document:
    ```
    - Verify you're using correct document
    - Check if you have multiple versions
@@ -676,7 +676,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Compare with original from institution
    ```
 
-2. **Contact Institution:**
+2. Contact Institution:
    ```
    - Report incorrect information
    - Provide document hash
@@ -684,7 +684,7 @@ A: The verification shows all information registered on the blockchain. You cann
    - Institution may need to issue corrected document
    ```
 
-3. **Cache Issues:**
+3. Cache Issues:
    ```
    - Clear browser cache
    - Try incognito/private mode
@@ -692,54 +692,54 @@ A: The verification shows all information registered on the blockchain. You cann
    - Try different device
    ```
 
-### Access Logs Not Showing
+Access Logs Not Showing
 
-**Problem:** Cannot see who verified document
+Problem: Cannot see who verified document
 
-**Solutions:**
+Solutions:
 
-1. **Refresh Page:**
+1. Refresh Page:
    ```
    - Click refresh button
    - Or press F5
    - Wait for page to load completely
    ```
 
-2. **Check Permissions:**
+2. Check Permissions:
    ```
    - Ensure you're logged in
    - Verify you're the document owner
    - Check if feature is enabled for your account
    ```
 
-3. **Recent Verifications:**
+3. Recent Verifications:
    ```
    - Logs may take a few minutes to appear
    - Wait 5-10 minutes
    - Refresh page
    ```
 
-### Getting Help
+Getting Help
 
-**Institution Support:**
+Institution Support:
 - Contact your institution's registrar office
 - Email: registrar@your-university.edu
 - Phone: [Institution phone number]
 - Office hours: [Hours]
 
-**Technical Support:**
+Technical Support:
 - Email: student-support@blockchain-docs.com
 - Live Chat: Available in student portal
 - Hours: Monday-Friday, 9 AM - 5 PM EST
 - Response time: Usually within 24 hours
 
-**Emergency Support:**
+Emergency Support:
 - For urgent issues (e.g., job application deadline)
 - Email: urgent@blockchain-docs.com
 - Mark subject as "URGENT"
 - Include deadline information
 
-**Self-Help Resources:**
+Self-Help Resources:
 - Video tutorials: https://tutorials.blockchain-docs.com
 - FAQ: https://faq.blockchain-docs.com
 - User forum: https://forum.blockchain-docs.com
@@ -747,43 +747,43 @@ A: The verification shows all information registered on the blockchain. You cann
 
 ---
 
-## Quick Reference
+Quick Reference
 
-### Common Tasks
+Common Tasks
 
-**Download Document:**
+Download Document:
 ```
 Portal → My Documents → Select Document → Download
 ```
 
-**Share Verification Link:**
+Share Verification Link:
 ```
 Portal → My Documents → Select Document → Share → Copy Link
 ```
 
-**Grant Access:**
+Grant Access:
 ```
 Portal → My Documents → Select Document → Manage Access → Grant Access
 ```
 
-**View Access Logs:**
+View Access Logs:
 ```
 Portal → My Documents → Select Document → Access Logs
 ```
 
-**Revoke Access:**
+Revoke Access:
 ```
 Portal → My Documents → Select Document → Manage Access → Revoke
 ```
 
-### Important Links
+Important Links
 
 - Student Portal: https://portal.blockchain-docs.com
 - Verification Portal: https://verify.blockchain-docs.com
 - Help Center: https://help.blockchain-docs.com
 - Video Tutorials: https://tutorials.blockchain-docs.com
 
-### Contact Information
+Contact Information
 
 - Student Support: student-support@blockchain-docs.com
 - Technical Issues: tech-support@blockchain-docs.com
@@ -792,8 +792,9 @@ Portal → My Documents → Select Document → Manage Access → Revoke
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** November 27, 2024  
-**Next Review:** May 27, 2025
+Document Version: 1.0  
+Last Updated: November 27, 2024  
+Next Review: May 27, 2025
 
-For the latest version of this guide, visit: https://docs.blockchain-docs.com/student-guide
+For the latest version of Hey there! This guide, visit: https://docs.blockchain-docs.com/student-guide
+

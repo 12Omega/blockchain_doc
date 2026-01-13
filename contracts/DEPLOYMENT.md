@@ -1,16 +1,16 @@
-# Smart Contract Deployment Guide
+Smart Contract Deployment Guide
 
-This guide covers the deployment and testing of the blockchain document verification smart contracts on Ethereum Sepolia testnet.
+Hey there! This guide covers the deployment and testing of the blockchain document verification smart contracts on Ethereum Sepolia testnet.
 
-## Prerequisites
+What You Need First
 
-1. **Node.js and npm** installed
-2. **Hardhat** development environment set up
-3. **MetaMask** wallet with Sepolia testnet ETH
-4. **Infura** or **Alchemy** API key for Sepolia access
-5. **Etherscan API key** for contract verification
+1. Node.js and npm installed
+2. Hardhat development environment set up
+3. MetaMask wallet with Sepolia testnet ETH
+4. Infura or Alchemy API key for Sepolia access
+5. Etherscan API key for contract verification
 
-## Environment Setup
+Environment Setup
 
 1. Copy the environment template:
 ```bash
@@ -19,15 +19,15 @@ cp ../.env.example .env
 
 2. Fill in your environment variables in `.env`:
 ```bash
-# Required for Sepolia deployment
+Required for Sepolia deployment
 SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID
 PRIVATE_KEY=your_private_key_here
 ETHERSCAN_API_KEY=your_etherscan_api_key
 ```
 
-⚠️ **Security Warning**: Never commit your private key or API keys to version control.
+⚠️ Security Warning: Never commit your private key or API keys to version control.
 
-## Getting Sepolia ETH
+Getting Sepolia ETH
 
 You need Sepolia testnet ETH to deploy contracts. Get it from these faucets:
 - [Sepolia Faucet](https://sepoliafaucet.com/)
@@ -36,9 +36,9 @@ You need Sepolia testnet ETH to deploy contracts. Get it from these faucets:
 
 You'll need approximately 0.01-0.02 ETH for deployment.
 
-## Deployment Process
+Deployment Process
 
-### Step 1: Compile Contracts
+Step 1: Compile Contracts
 
 ```bash
 npm run compile
@@ -46,7 +46,7 @@ npm run compile
 
 This compiles the smart contracts and generates artifacts.
 
-### Step 2: Run Tests (Optional but Recommended)
+Step 2: Run Tests (Optional but Recommended)
 
 ```bash
 npm test
@@ -54,7 +54,7 @@ npm test
 
 Ensure all tests pass before deployment.
 
-### Step 3: Deploy to Sepolia Testnet
+Step 3: Deploy to Sepolia Testnet
 
 ```bash
 npm run deploy:sepolia
@@ -96,7 +96,7 @@ DocumentRegistry: 0x...
 ========================
 ```
 
-### Step 4: Test Deployed Contracts
+Step 4: Test Deployed Contracts
 
 ```bash
 npm run test:sepolia
@@ -142,7 +142,7 @@ Document details:
 🎉 All tests completed successfully!
 ```
 
-### Step 5: Verify Contracts on Etherscan (Optional)
+Step 5: Verify Contracts on Etherscan (Optional)
 
 ```bash
 npm run verify:sepolia
@@ -150,11 +150,11 @@ npm run verify:sepolia
 
 This will verify your contracts on Etherscan, making the source code publicly viewable.
 
-## Deployment Files
+Deployment Files
 
 After successful deployment, you'll find these files:
 
-### `deployments/sepolia-deployment.json`
+`deployments/sepolia-deployment.json`
 Contains deployment information:
 ```json
 {
@@ -175,7 +175,7 @@ Contains deployment information:
 }
 ```
 
-### `abis/AccessControl.json` and `abis/DocumentRegistry.json`
+`abis/AccessControl.json` and `abis/DocumentRegistry.json`
 Contract ABIs for frontend integration:
 ```json
 {
@@ -186,7 +186,7 @@ Contract ABIs for frontend integration:
 }
 ```
 
-## Frontend Integration
+Frontend Integration
 
 Use the generated ABI files and contract addresses for frontend integration:
 
@@ -208,29 +208,29 @@ const documentRegistryContract = new ethers.Contract(
 );
 ```
 
-## Contract Addresses
+Contract Addresses
 
 After deployment, your contract addresses will be:
-- **AccessControl**: Found in `deployments/sepolia-deployment.json`
-- **DocumentRegistry**: Found in `deployments/sepolia-deployment.json`
+- AccessControl: Found in `deployments/sepolia-deployment.json`
+- DocumentRegistry: Found in `deployments/sepolia-deployment.json`
 
-## Troubleshooting
+Troubleshooting
 
-### Common Issues
+Common Issues
 
-1. **Insufficient funds**: Ensure you have enough Sepolia ETH
-2. **Network connection**: Check your Infura/Alchemy URL
-3. **Private key issues**: Ensure your private key is correct and has the 0x prefix
-4. **Gas estimation failed**: Network might be congested, try again later
+1. Insufficient funds: Ensure you have enough Sepolia ETH
+2. Network connection: Check your Infura/Alchemy URL
+3. Private key issues: Ensure your private key is correct and has the 0x prefix
+4. Gas estimation failed: Network might be congested, try again later
 
-### Error Messages
+Error Messages
 
 - `Error: insufficient funds`: Get more Sepolia ETH from faucets
 - `Error: network connection`: Check your SEPOLIA_URL in .env
 - `Error: invalid private key`: Verify your PRIVATE_KEY in .env
 - `Error: contract verification failed`: Check your ETHERSCAN_API_KEY
 
-### Getting Help
+Getting Help
 
 If you encounter issues:
 1. Check the Hardhat console output for detailed error messages
@@ -238,26 +238,26 @@ If you encounter issues:
 3. Ensure you have sufficient Sepolia ETH
 4. Check network status on [Sepolia Etherscan](https://sepolia.etherscan.io/)
 
-## Security Considerations
+Security Considerations
 
-1. **Never commit private keys** to version control
-2. **Use environment variables** for sensitive data
-3. **Test thoroughly** on testnet before mainnet deployment
-4. **Verify contracts** on Etherscan for transparency
-5. **Keep deployment records** secure and backed up
+1. Never commit private keys to version control
+2. Use environment variables for sensitive data
+3. Test thoroughly on testnet before mainnet deployment
+4. Verify contracts on Etherscan for transparency
+5. Keep deployment records secure and backed up
 
-## Next Steps
+Next Steps
 
 After successful deployment:
-1. Update frontend configuration with contract addresses
+1. Update frontend Setting Things Up with contract addresses
 2. Test the complete application flow
 3. Prepare for mainnet deployment (if applicable)
 4. Set up monitoring and alerting
 5. Create user documentation
 
-## Contract Interaction Examples
+Contract Interaction Examples
 
-### Using Hardhat Console
+Using Hardhat Console
 
 ```bash
 npx hardhat console --network sepolia
@@ -290,12 +290,12 @@ console.log("Valid:", isValid);
 console.log("Document:", document);
 ```
 
-## Mainnet Deployment
+Mainnet Deployment
 
-⚠️ **Warning**: Mainnet deployment requires real ETH and careful consideration.
+⚠️ Warning: Mainnet deployment requires real ETH and careful consideration.
 
 For mainnet deployment:
-1. Update `hardhat.config.js` with mainnet configuration
+1. Update `hardhat.config.js` with mainnet Setting Things Up
 2. Set `MAINNET_URL` and ensure sufficient ETH
 3. Test extensively on testnet first
 4. Consider using a multisig wallet for admin functions

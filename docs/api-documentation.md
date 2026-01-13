@@ -1,6 +1,6 @@
-# API Documentation - Blockchain Document Verification System
+API Documentation - Blockchain Document Verification System
 
-## Table of Contents
+Table of Contents
 1. [Introduction](#introduction)
 2. [Authentication](#authentication)
 3. [Base URLs and Endpoints](#base-urls-and-endpoints)
@@ -14,15 +14,15 @@
 11. [Rate Limiting](#rate-limiting)
 12. [SDKs and Code Examples](#sdks-and-code-examples)
 
-## Introduction
+Introduction
 
 The Blockchain Document Verification API provides programmatic access to document upload, verification, and management functionality. This RESTful API uses JSON for data exchange and supports standard HTTP methods.
 
-### API Version
+API Version
 Current Version: `v1`
 Base URL: `https://your-domain.com/api`
 
-### Supported Operations
+Supported Operations
 - Document upload and registration
 - Document verification by hash or file
 - User authentication and management
@@ -30,64 +30,64 @@ Base URL: `https://your-domain.com/api`
 - Real-time verification status updates
 - Audit trail and compliance reporting
 
-## Authentication
+Authentication
 
-### API Key Authentication
+API Key Authentication
 All API requests require authentication using an API key in the Authorization header.
 
 ```http
 Authorization: Bearer YOUR_API_KEY
 ```
 
-### Obtaining API Keys
+Obtaining API Keys
 1. Register for an account at the developer portal
 2. Complete identity verification process
 3. Generate API keys in your dashboard
 4. Configure rate limits and permissions
 
-### JWT Token Authentication
+JWT Token Authentication
 For user-specific operations, use JWT tokens obtained through wallet authentication.
 
 ```http
 Authorization: Bearer JWT_TOKEN
 ```
 
-## Base URLs and Endpoints
+Base URLs and Endpoints
 
-### Production Environment
+Production Environment
 ```
 Base URL: https://api.your-domain.com
 WebSocket: wss://ws.your-domain.com
 ```
 
-### Staging Environment
+Staging Environment
 ```
 Base URL: https://staging-api.your-domain.com
 WebSocket: wss://staging-ws.your-domain.com
 ```
 
-### Rate Limits
+Rate Limits
 - Standard: 100 requests/minute
 - Premium: 1000 requests/minute
 - Enterprise: Custom limits available
 
-## Authentication Endpoints
+Authentication Endpoints
 
-### Generate Nonce
+Generate Nonce
 Generate a nonce for wallet signature authentication.
 
 ```http
 POST /api/auth/nonce
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "walletAddress": "0x742d35Cc6634C0532925a3b8D4C9db96590c4"
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -100,14 +100,14 @@ POST /api/auth/nonce
 }
 ```
 
-### Verify Signature
+Verify Signature
 Verify wallet signature and obtain JWT token.
 
 ```http
 POST /api/auth/verify
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "walletAddress": "0x742d35Cc6634C0532925a3b8D4C9db96590c4",
@@ -116,7 +116,7 @@ POST /api/auth/verify
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -135,9 +135,9 @@ POST /api/auth/verify
 }
 ```
 
-## Document Management Endpoints
+Document Management Endpoints
 
-### Upload Document
+Upload Document
 Upload and register a new document on the blockchain.
 
 ```http
@@ -146,7 +146,7 @@ Content-Type: multipart/form-data
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Form Data:**
+Form Data:
 ```
 document: [PDF file]
 studentName: "John Doe"
@@ -158,7 +158,7 @@ course: "Computer Science"
 grade: "A"
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -178,7 +178,7 @@ grade: "A"
   }
 }
 ```#
-## Get Document Details
+Get Document Details
 Retrieve detailed information about a specific document.
 
 ```http
@@ -186,7 +186,7 @@ GET /api/documents/{documentHash}
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -221,7 +221,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-### List Documents
+List Documents
 Get a paginated list of documents accessible to the authenticated user.
 
 ```http
@@ -229,14 +229,14 @@ GET /api/documents?page=1&limit=10&type=degree&status=verified
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Query Parameters:**
+Query Parameters:
 - `page` (optional): Page number (default: 1)
 - `limit` (optional): Items per page (default: 10, max: 100)
 - `type` (optional): Document type filter
 - `status` (optional): Document status filter
 - `search` (optional): Search term for metadata
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -263,9 +263,9 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-## Verification Endpoints
+Verification Endpoints
 
-### Verify Document by Hash
+Verify Document by Hash
 Verify a document using its blockchain hash.
 
 ```http
@@ -273,14 +273,14 @@ POST /api/verify/hash
 Authorization: Bearer API_KEY
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "documentHash": "0x7f9a8b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a"
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -314,7 +314,7 @@ Authorization: Bearer API_KEY
 }
 ```
 
-### Verify Document by File Upload
+Verify Document by File Upload
 Verify a document by uploading the PDF file.
 
 ```http
@@ -323,12 +323,12 @@ Content-Type: multipart/form-data
 Authorization: Bearer API_KEY
 ```
 
-**Form Data:**
+Form Data:
 ```
 document: [PDF file]
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -350,7 +350,7 @@ document: [PDF file]
 }
 ```
 
-### Batch Verification
+Batch Verification
 Verify multiple documents in a single request.
 
 ```http
@@ -358,7 +358,7 @@ POST /api/verify/batch
 Authorization: Bearer API_KEY
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "documents": [
@@ -374,7 +374,7 @@ Authorization: Bearer API_KEY
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -407,9 +407,9 @@ Authorization: Bearer API_KEY
 }
 ```
 
-## User Management Endpoints
+User Management Endpoints
 
-### Get User Profile
+Get User Profile
 Retrieve the authenticated user's profile information.
 
 ```http
@@ -417,7 +417,7 @@ GET /api/users/profile
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -446,7 +446,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-### Update User Profile
+Update User Profile
 Update the authenticated user's profile information.
 
 ```http
@@ -454,7 +454,7 @@ PUT /api/users/profile
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "name": "John Smith",
@@ -464,7 +464,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -476,9 +476,9 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-## Privacy and Compliance Endpoints
+Privacy and Compliance Endpoints
 
-### Record User Consent
+Record User Consent
 Record user consent for data processing activities.
 
 ```http
@@ -486,7 +486,7 @@ POST /api/privacy/consent
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "consentType": "data_processing",
@@ -496,7 +496,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -510,7 +510,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-### Request Data Export
+Request Data Export
 Request export of all user data for GDPR compliance.
 
 ```http
@@ -518,7 +518,7 @@ POST /api/privacy/export-request
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Request Body:**
+Request Body:
 ```json
 {
   "exportFormat": "json",
@@ -526,7 +526,7 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -540,16 +540,16 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-## Performance and Monitoring Endpoints
+Performance and Monitoring Endpoints
 
-### System Health Check
+System Health Check
 Check the overall system health and status.
 
 ```http
 GET /api/health
 ```
 
-**Response:**
+Response:
 ```json
 {
   "status": "OK",
@@ -574,7 +574,7 @@ GET /api/health
 }
 ```
 
-### Performance Metrics (Admin Only)
+Performance Metrics (Admin Only)
 Get system performance metrics and statistics.
 
 ```http
@@ -582,7 +582,7 @@ GET /api/performance/stats
 Authorization: Bearer JWT_TOKEN
 ```
 
-**Response:**
+Response:
 ```json
 {
   "success": true,
@@ -610,9 +610,9 @@ Authorization: Bearer JWT_TOKEN
 }
 ```
 
-## Error Handling
+Error Handling
 
-### Standard Error Response Format
+Standard Error Response Format
 All API errors follow a consistent format:
 
 ```json
@@ -632,7 +632,7 @@ All API errors follow a consistent format:
 }
 ```
 
-### Common Error Codes
+Common Error Codes
 
 | Code | HTTP Status | Description |
 |------|-------------|-------------|
@@ -645,7 +645,7 @@ All API errors follow a consistent format:
 | `IPFS_ERROR` | 500 | IPFS storage error |
 | `INTERNAL_ERROR` | 500 | Internal server error |
 
-### Error Handling Best Practices
+Error Handling Best Practices
 
 ```javascript
 // Example error handling in JavaScript
@@ -674,9 +674,9 @@ async function verifyDocument(hash) {
 }
 ```
 
-## Rate Limiting
+Rate Limiting
 
-### Rate Limit Headers
+Rate Limit Headers
 All API responses include rate limiting information:
 
 ```http
@@ -686,7 +686,7 @@ X-RateLimit-Reset: 1642248600
 X-RateLimit-Window: 60
 ```
 
-### Rate Limit Tiers
+Rate Limit Tiers
 
 | Tier | Requests/Minute | Burst Limit | Price |
 |------|-----------------|-------------|-------|
@@ -695,7 +695,7 @@ X-RateLimit-Window: 60
 | Premium | 1000 | 2000 | $99/month |
 | Enterprise | Custom | Custom | Contact Sales |
 
-### Handling Rate Limits
+Handling Rate Limits
 
 ```javascript
 // Exponential backoff for rate limiting
@@ -715,9 +715,9 @@ async function apiCallWithRetry(apiCall, maxRetries = 3) {
 }
 ```
 
-## SDKs and Code Examples
+SDKs and Code Examples
 
-### JavaScript/Node.js SDK
+JavaScript/Node.js SDK
 
 ```javascript
 const { BlockchainDocsAPI } = require('@blockchain-docs/sdk');
@@ -743,7 +743,7 @@ const upload = await client.documents.upload({
 });
 ```
 
-### Python SDK
+Python SDK
 
 ```python
 from blockchain_docs import BlockchainDocsClient
@@ -753,11 +753,11 @@ client = BlockchainDocsClient(
     base_url='https://api.your-domain.com'
 )
 
-# Verify document
+Verify document
 result = client.verify.by_hash('0x7f9a8b6c...')
-print(result.verified)  # True/False
+print(result.verified)  True/False
 
-# Upload document
+Upload document
 with open('certificate.pdf', 'rb') as f:
     upload = client.documents.upload(
         file=f,
@@ -770,10 +770,10 @@ with open('certificate.pdf', 'rb') as f:
     )
 ```
 
-### cURL Examples
+cURL Examples
 
 ```bash
-# Verify document by hash
+Verify document by hash
 curl -X POST https://api.your-domain.com/api/verify/hash \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
@@ -781,7 +781,7 @@ curl -X POST https://api.your-domain.com/api/verify/hash \
     "documentHash": "0x7f9a8b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a"
   }'
 
-# Upload document
+Upload document
 curl -X POST https://api.your-domain.com/api/documents/upload \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "document=@certificate.pdf" \
@@ -790,23 +790,23 @@ curl -X POST https://api.your-domain.com/api/documents/upload \
   -F "institutionName=University of Technology" \
   -F "documentType=degree"
 
-# Get user profile
+Get user profile
 curl -X GET https://api.your-domain.com/api/users/profile \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 ---
 
-## Changelog
+Changelog
 
-### Version 1.0.0 (Current)
+Version 1.0.0 (Current)
 - Initial API release
 - Document upload and verification endpoints
 - User authentication and management
 - Privacy and compliance features
 - Performance monitoring endpoints
 
-### Upcoming Features
+Upcoming Features
 - WebSocket real-time notifications
 - Advanced search and filtering
 - Bulk operations optimization
@@ -815,6 +815,6 @@ curl -X GET https://api.your-domain.com/api/users/profile \
 
 ---
 
-**API Documentation Version:** 1.0  
-**Last Updated:** [Current Date]  
-**Support:** api-support@your-domain.com
+API Documentation Version: 1.0  
+Last Updated: [Current Date]  
+Support: api-support@your-domain.com

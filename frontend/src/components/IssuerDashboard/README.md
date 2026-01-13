@@ -1,10 +1,10 @@
-# Issuer Dashboard
+Issuer Dashboard
 
 This directory contains the Issuer Dashboard components for the Academic Document Blockchain Verification System.
 
-## Components
+Components
 
-### IssuerDashboard.js
+IssuerDashboard.js
 Main dashboard component that integrates all issuer functionality:
 - Tab-based navigation (Register Document, My Documents, Registration Result)
 - Role-based access control (issuer and admin only)
@@ -12,7 +12,7 @@ Main dashboard component that integrates all issuer functionality:
 - Batch upload functionality
 - Document management
 
-### DocumentUploadForm.js
+DocumentUploadForm.js
 Document registration form with the following features:
 - Drag-and-drop file upload
 - Student information input fields
@@ -21,7 +21,7 @@ Document registration form with the following features:
 - Form validation with error messages
 - Support for PDF, DOC, DOCX, JPG, PNG files (max 10MB)
 
-### RegistrationProgress.js
+RegistrationProgress.js
 Real-time progress indicator showing registration steps:
 1. Computing Document Hash (SHA-256)
 2. Encrypting Document (AES-256)
@@ -31,7 +31,7 @@ Real-time progress indicator showing registration steps:
 
 Each step shows status: pending, active, completed, or error.
 
-### QRCodeDisplay.js
+QRCodeDisplay.js
 Displays registration results after successful document registration:
 - Success confirmation message
 - QR code image with download option
@@ -40,7 +40,7 @@ Displays registration results after successful document registration:
 - IPFS storage details (CID, provider)
 - Verification URL with copy functionality
 
-### DocumentList.js
+DocumentList.js
 List view of registered documents with:
 - Search functionality (by student name, ID, institution, course)
 - Filters (status, document type)
@@ -49,7 +49,7 @@ List view of registered documents with:
 - Actions: View Details, View QR Code
 - Status indicators (verified, uploaded, failed)
 
-### BatchUploadModal.js
+BatchUploadModal.js
 Modal for uploading multiple documents at once:
 - Drag-and-drop multiple files
 - Filename parsing (StudentID_StudentName.ext format)
@@ -58,7 +58,7 @@ Modal for uploading multiple documents at once:
 - Success/failure indicators per file
 - Automatic retry on transient failures
 
-## Integration
+Integration
 
 The Issuer Dashboard is integrated into the main App.js:
 - Accessible via "Issuer Dashboard" navigation button
@@ -66,18 +66,18 @@ The Issuer Dashboard is integrated into the main App.js:
 - Uses AuthContext for authentication and authorization
 - Communicates with backend via documentService
 
-## API Integration
+API Integration
 
 The dashboard integrates with the following backend endpoints:
 - `POST /api/documents/register` - Register new document
 - `GET /api/documents` - Get list of documents with filters
 - `GET /api/documents/:documentHash` - Get document details
 
-## Requirements Satisfied
+What You Need Satisfied
 
-This implementation satisfies the following requirements from tasks.md:
+This implementation satisfies the following What You Need from tasks.md:
 
-**Task 11: Implement Issuer Dashboard Frontend**
+Task 11: Implement Issuer Dashboard Frontend
 - ✅ Create document upload form with drag-and-drop
 - ✅ Add student information input fields
 - ✅ Implement document type selection
@@ -87,7 +87,7 @@ This implementation satisfies the following requirements from tasks.md:
 - ✅ Add batch upload modal for multiple documents
 - ✅ Integrate with backend registration API
 
-**Requirements Coverage:**
+What You Need Coverage:
 - ✅ 1.5: QR code generation and display
 - ✅ 10.1: Dashboard with document registration options
 - ✅ 10.2: Form with file upload and student details
@@ -95,7 +95,7 @@ This implementation satisfies the following requirements from tasks.md:
 - ✅ 10.4: Display transaction ID, QR code, and blockchain explorer link
 - ✅ 10.5: Searchable document list with filters
 
-## Usage
+Usage
 
 ```javascript
 import { IssuerDashboard } from './components/IssuerDashboard';
@@ -106,14 +106,14 @@ import { IssuerDashboard } from './components/IssuerDashboard';
 )}
 ```
 
-## Dependencies
+Dependencies
 
 - @mui/material - Material-UI components
 - @mui/icons-material - Material-UI icons
 - react-dropzone - Drag-and-drop file upload
 - AuthContext - Authentication and user context
 
-## Future Enhancements
+Future Enhancements
 
 - Real-time QR code generation from backend data
 - Document preview before registration
@@ -121,3 +121,4 @@ import { IssuerDashboard } from './components/IssuerDashboard';
 - Advanced search with date ranges
 - Document analytics dashboard
 - Bulk operations (delete, transfer)
+

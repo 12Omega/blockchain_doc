@@ -1,73 +1,73 @@
-# Issuer Guide - Academic Document Blockchain Verification System
+Issuer Guide - Academic Document Blockchain Verification System
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Gettid](#getting-started)
-3. [Registering Documents](#registering-documents)
-4. [Managing Documents](#managing-documents)
-5. [Batch Operations](#batch-operations)
-6. [Best Practices](#best-practices)
-7. [Troubleshooting](#troubleshooting)
+Table of Contents
+1. Introduction
+2. Getting Started
+3. Registering Documents
+4. Managing Documents
+5. Batch Operations
+6. Best Practices
+7. Troubleshooting
 
-## Introduction
+Introduction
 
-Welcome to the Issuer Guide for the Academic Document Blockchain Verification System. This guide is designed for authorized personnel at educational institutions who are responsible for issuing and registering academic credentials on the blockchain.
+Welcome to the Issuer Guide! If you're here, you're probably someone at an educational institution who's responsible for issuing and registering academic credentials on the blockchain. Don't worry if this sounds intimidating - we've made it as simple as possible.
 
-### What is an Issuer?
+What is an Issuer?
 
-An **Issuer** is an authorized representative of an educational institution who has the permission to:
-- Register academic documents on the blockchain
-- Generate verification QR codes
-- Manage document lifecycle (activation/deactivation)
+Think of yourself as the gatekeeper of academic credentials. As an Issuer, you're the authorized person who can:
+- Register academic documents on the blockchain (making them tamper-proof forever)
+- Generate those cool QR codes for instant verification
+- Manage the entire lifecycle of documents (activate, deactivate, you name it)
 - Grant document access to students and third parties
-- View institutional document statistics
+- Keep track of all your institution's document statistics
 
-### Why Use Blockchain for Document Issuance?
+Why Use Blockchain for Document Issuance?
 
-**Benefits:**
-- **Immutable Records**: Once registered, documents cannot be tampered with
-- **Instant Verification**: Employers and institutions can verify credentials in seconds
-- **Cost Reduction**: Eliminates manual verification processes
-- **Global Accessibility**: Documents can be verified from anywhere, 24/7
-- **Enhanced Security**: Cryptographic proof prevents forgery
-- **Audit Trail**: Complete history of all document activities
+Great question! Here's why this is a game-changer:
+- Immutable Records: Once you register a document, it's there forever - no one can mess with it
+- Lightning-Fast Verification: Employers can verify credentials in seconds, not days or weeks
+- Cost Savings: Say goodbye to expensive manual verification processes
+- Global Reach: Your documents can be verified from anywhere on Earth, 24/7
+- Enhanced Security: Cryptographic proof makes forgery impossible
+- Complete Transparency: Every action is logged and traceable
 
-### System Requirements
+System What You Need
 
-**Hardware:**
+Hardware:
 - Computer with internet connection
 - Minimum 4GB RAM
 - Modern processor (Intel i3 or equivalent)
 
-**Software:**
+Software:
 - Modern web browser (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
 - MetaMask browser extension (latest version)
 - PDF reader for document preparation
 
-**Network:**
+Network:
 - Stable internet connection (minimum 5 Mbps)
 - Access to Ethereum Sepolia testnet (for testing)
 - Access to Polygon mainnet (for production)
 
-## Getting Started
+Getting Started
 
-### Step 1: Install MetaMask
+Step 1: Install MetaMask
 
 MetaMask is a cryptocurrency wallet that allows you to interact with the blockchain.
 
-1. **Download MetaMask:**
+1. Download MetaMask:
    - Visit https://metamask.io
    - Click "Download" and select your browser
    - Install the extension
 
-2. **Create Wallet:**
+2. Create Wallet:
    - Click "Create a Wallet"
    - Set a strong password
-   - **IMPORTANT**: Write down your Secret Recovery Phrase (12 words)
+   - IMPORTANT: Write down your Secret Recovery Phrase (12 words)
    - Store it in a secure location (never share it!)
    - Confirm your recovery phrase
 
-3. **Add Sepolia Testnet** (for testing):
+3. Add Sepolia Testnet (for testing):
    - Click the network dropdown (top of MetaMask)
    - Click "Add Network"
    - Enter network details:
@@ -80,39 +80,39 @@ MetaMask is a cryptocurrency wallet that allows you to interact with the blockch
      ```
    - Click "Save"
 
-### Step 2: Get Testnet ETH
+Step 2: Get Testnet ETH
 
 For testing purposes, you need free testnet ETH to pay for blockchain transactions.
 
-1. **Copy Your Wallet Address:**
+1. Copy Your Wallet Address:
    - Open MetaMask
    - Click on your account name to copy address
    - Format: `0x742d35Cc6634C0532925a3b844D9db96590c4`
 
-2. **Visit Faucets:**
+2. Visit Faucets:
    - Alchemy Faucet: https://www.alchemy.com/faucets/ethereum-sepolia
    - Sepolia Faucet: https://sepoliafaucet.com
    - Paste your wallet address
    - Complete captcha
    - Wait 1-2 minutes for ETH to arrive
 
-3. **Verify Balance:**
+3. Verify Balance:
    - Check MetaMask shows ~0.5 ETH
    - This is enough for hundreds of document registrations
 
-### Step 3: Register as an Issuer
+Step 3: Register as an Issuer
 
-1. **Visit the Platform:**
+1. Visit the Platform:
    - Navigate to the application URL
    - Example: `https://your-institution.blockchain-docs.com`
 
-2. **Connect Wallet:**
+2. Connect Wallet:
    - Click "Connect Wallet" button
    - MetaMask popup will appear
    - Click "Next" then "Connect"
    - Sign the authentication message
 
-3. **Complete Profile:**
+3. Complete Profile:
    - Fill in your information:
      - Full Name
      - Email Address
@@ -122,31 +122,31 @@ For testing purposes, you need free testnet ETH to pay for blockchain transactio
    - Upload profile picture (optional)
    - Click "Save Profile"
 
-4. **Request Issuer Role:**
+4. Request Issuer Role:
    - Your account starts as "Student" role
    - Contact your system administrator
    - Provide your wallet address
    - Administrator will assign "Issuer" role
    - You'll receive email confirmation
 
-5. **Verify Issuer Access:**
+5. Verify Issuer Access:
    - Refresh the page
    - You should now see "Issuer Dashboard"
    - "Upload Document" button should be visible
 
-## Registering Documents
+Registering Documents
 
-### Document Preparation
+Document Preparation
 
-Before uploading, ensure your documents meet these requirements:
+Before uploading, ensure your documents meet these What You Need:
 
-**File Requirements:**
-- **Format**: PDF (recommended), DOC, DOCX, JPG, PNG
-- **Size**: Maximum 10MB per file
-- **Quality**: High resolution, clearly readable
-- **Content**: Complete and finalized (no drafts)
+File What You Need:
+- Format: PDF (recommended), DOC, DOCX, JPG, PNG
+- Size: Maximum 10MB per file
+- Quality: High resolution, clearly readable
+- Content: Complete and finalized (no drafts)
 
-**Document Checklist:**
+Document Checklist:
 - [ ] Official institution letterhead
 - [ ] All required signatures
 - [ ] Official seal/stamp
@@ -155,42 +155,42 @@ Before uploading, ensure your documents meet these requirements:
 - [ ] No spelling or grammatical errors
 - [ ] Document is final version (not draft)
 
-**Best Practices:**
+Best Practices:
 - Use PDF/A format for long-term preservation
 - Ensure consistent formatting across all documents
 - Include institution logo and branding
 - Use high-quality scans (300 DPI minimum)
 - Remove any sensitive information not needed for verification
 
-### Single Document Registration
+Single Document Registration
 
-#### Step 1: Access Upload Form
+Step 1: Access Upload Form
 
 1. Log in to the Issuer Dashboard
 2. Click "Upload Document" or "Register New Document"
 3. The document registration form will appear
 
-#### Step 2: Upload Document File
+Step 2: Upload Document File
 
-1. **Drag and Drop:**
+1. Drag and Drop:
    - Drag your PDF file into the upload area
    - OR click "Browse Files" to select
 
-2. **File Validation:**
+2. File Validation:
    - System checks file size and format
    - Green checkmark indicates valid file
    - Red error shows if file is invalid
 
-3. **Preview:**
+3. Preview:
    - Document preview appears
    - Verify it's the correct file
    - Check all pages are visible
 
-#### Step 3: Enter Document Metadata
+Step 3: Enter Document Metadata
 
 Fill in all required fields accurately:
 
-**Student Information:**
+Student Information:
 ```
 Student Name: John Michael Doe
 Student ID: STU2023001234
@@ -198,7 +198,7 @@ Email: john.doe@student.university.edu
 Date of Birth: 1998-05-15 (optional)
 ```
 
-**Document Details:**
+Document Details:
 ```
 Document Type: [Select from dropdown]
   - Bachelor's Degree
@@ -213,7 +213,7 @@ Program/Course: Computer Science
 Specialization: Artificial Intelligence (optional)
 ```
 
-**Academic Information:**
+Academic Information:
 ```
 Issue Date: 2023-06-15
 Graduation Date: 2023-05-20
@@ -223,7 +223,7 @@ Class Rank: 15/200 (optional)
 Honors: Magna Cum Laude (optional)
 ```
 
-**Institution Information:**
+Institution Information:
 ```
 Institution Name: University of Technology
 Department: School of Computer Science
@@ -231,37 +231,37 @@ Campus: Main Campus (if multiple)
 Country: Nepal
 ```
 
-**Additional Information:**
+Additional Information:
 ```
 Document Number: DEG-2023-CS-001234 (optional)
 Expiration Date: None (or specific date)
 Notes: Additional context or special remarks
 ```
 
-#### Step 4: Review and Confirm
+Step 4: Review and Confirm
 
-1. **Review Summary:**
+1. Review Summary:
    - Check all entered information
    - Verify student name spelling
    - Confirm dates are correct
    - Review document type selection
 
-2. **Preview QR Code Location:**
+2. Preview QR Code Location:
    - System shows where QR code will be placed
    - Adjust position if needed (optional feature)
 
-3. **Terms and Conditions:**
+3. Terms and Conditions:
    - Read the terms of service
    - Check "I confirm this information is accurate"
    - Check "I have authority to issue this document"
 
-#### Step 5: Submit for Registration
+Step 5: Submit for Registration
 
-1. **Click "Register Document"**
+1. Click "Register Document"
    - System begins processing
    - Progress indicators show each step
 
-2. **Processing Steps:**
+2. Processing Steps:
    ```
    ✓ Computing document hash...
    ✓ Encrypting document...
@@ -270,7 +270,7 @@ Notes: Additional context or special remarks
    ⏳ Waiting for blockchain confirmation...
    ```
 
-3. **MetaMask Confirmation:**
+3. MetaMask Confirmation:
    - MetaMask popup appears
    - Review transaction details:
      - Gas fee (usually $0.01-0.10)
@@ -278,40 +278,40 @@ Notes: Additional context or special remarks
    - Click "Confirm"
    - Wait 30-60 seconds for confirmation
 
-4. **Registration Complete:**
+4. Registration Complete:
    - Success message appears
    - Document hash displayed
    - Transaction ID shown
    - QR code generated
 
-#### Step 6: Download and Share
+Step 6: Download and Share
 
-1. **Download QR Code:**
+1. Download QR Code:
    - Click "Download QR Code"
    - Save as PNG or SVG
    - Print quality: 300 DPI minimum
 
-2. **Download Certificate:**
+2. Download Certificate:
    - Click "Download Certificate with QR"
    - Original document with embedded QR code
    - Ready to send to student
 
-3. **Copy Verification Link:**
+3. Copy Verification Link:
    - Click "Copy Verification URL"
    - Share with student via email
    - Format: `https://verify.blockchain-docs.com/doc/0x7f9a8b...`
 
-4. **Send to Student:**
+4. Send to Student:
    - Email the document with QR code
    - Include verification instructions
    - Provide verification URL
    - Explain how to verify authenticity
 
-### Registration Confirmation Email
+Registration Confirmation Email
 
 After successful registration, the system sends confirmation emails:
 
-**To Issuer:**
+To Issuer:
 ```
 Subject: Document Successfully Registered - John Doe
 
@@ -336,7 +336,7 @@ Best regards,
 Blockchain Document Verification System
 ```
 
-**To Student:**
+To Student:
 ```
 Subject: Your Academic Document is Now Blockchain-Verified
 
@@ -364,15 +364,15 @@ Best regards,
 University of Technology
 ```
 
-## Managing Documents
+Managing Documents
 
-### Viewing Registered Documents
+Viewing Registered Documents
 
-1. **Access Document List:**
+1. Access Document List:
    - Navigate to "My Documents" or "Issued Documents"
    - View all documents you've registered
 
-2. **Document List View:**
+2. Document List View:
    ```
    ┌─────────────────────────────────────────────────────────┐
    │ Student Name    │ Document Type │ Issue Date │ Status   │
@@ -383,21 +383,21 @@ University of Technology
    └─────────────────────────────────────────────────────────┘
    ```
 
-3. **Search and Filter:**
+3. Search and Filter:
    - Search by student name or ID
    - Filter by document type
    - Filter by date range
    - Filter by status (Active/Revoked/Expired)
    - Sort by any column
 
-### Viewing Document Details
+Viewing Document Details
 
-1. **Click on Document:**
+1. Click on Document:
    - Opens detailed view
    - Shows all metadata
    - Displays verification history
 
-2. **Document Details Page:**
+2. Document Details Page:
    ```
    Document Information
    ├── Document Hash: 0x7f9a8b6c...
@@ -429,7 +429,7 @@ University of Technology
    └── Confirmations: 1,250
    ```
 
-3. **Available Actions:**
+3. Available Actions:
    - View on Blockchain Explorer
    - Download Original Document
    - Regenerate QR Code
@@ -437,12 +437,12 @@ University of Technology
    - Revoke Document (if needed)
    - View Audit Trail
 
-### Granting Document Access
+Granting Document Access
 
 Sometimes you need to grant specific access to third parties:
 
-1. **Click "Grant Access"**
-2. **Enter Recipient Information:**
+1. Click "Grant Access"
+2. Enter Recipient Information:
    ```
    Recipient Name: ABC Corporation HR Department
    Email: hr@abccorp.com
@@ -451,24 +451,24 @@ Sometimes you need to grant specific access to third parties:
    Purpose: Employment Verification
    ```
 
-3. **Set Permissions:**
+3. Set Permissions:
    - View document metadata
    - Download encrypted document
    - View verification history
    - Receive verification notifications
 
-4. **Send Access Grant:**
+4. Send Access Grant:
    - System sends email with access link
    - Recipient can view document details
    - Access is logged in audit trail
 
-### Revoking Documents
+Revoking Documents
 
 If a document needs to be revoked (e.g., issued in error, student expelled):
 
-1. **Navigate to Document**
-2. **Click "Revoke Document"**
-3. **Provide Reason:**
+1. Navigate to Document
+2. Click "Revoke Document"
+3. Provide Reason:
    ```
    Reason for Revocation:
    [ ] Issued in error
@@ -480,56 +480,56 @@ If a document needs to be revoked (e.g., issued in error, student expelled):
    Additional Notes: [Detailed explanation]
    ```
 
-4. **Confirm Revocation:**
+4. Confirm Revocation:
    - Warning: This action is permanent
    - Document will show as "Revoked" in verifications
    - Blockchain record remains (for audit trail)
    - Student and relevant parties are notified
 
-5. **Revocation Effects:**
+5. Revocation Effects:
    - Document marked as revoked on blockchain
    - Verification attempts show "Revoked" status
    - Original document remains accessible (for records)
    - Audit trail updated with revocation details
 
-## Batch Operations
+Batch Operations
 
 For institutions processing multiple documents, batch operations save significant time.
 
-### Preparing Batch Upload
+Preparing Batch Upload
 
-1. **Download Template:**
+1. Download Template:
    - Click "Batch Upload" in dashboard
    - Download CSV template
    - Template includes all required fields
 
-2. **CSV Template Format:**
+2. CSV Template Format:
    ```csv
    student_name,student_id,email,document_type,program,issue_date,graduation_date,gpa,honors,file_path
    John Doe,STU001,john@email.com,degree,Computer Science,2023-06-15,2023-05-20,3.85,Magna Cum Laude,/path/to/john_doe_degree.pdf
    Jane Smith,STU002,jane@email.com,degree,Business Admin,2023-06-15,2023-05-20,3.92,Summa Cum Laude,/path/to/jane_smith_degree.pdf
    ```
 
-3. **Prepare Files:**
+3. Prepare Files:
    - Organize all PDF files in one folder
    - Name files consistently (e.g., `studentid_documenttype.pdf`)
-   - Ensure all files meet size and format requirements
+   - Ensure all files meet size and format What You Need
    - Verify file paths in CSV are correct
 
-### Uploading Batch
+Uploading Batch
 
-1. **Upload CSV File:**
+1. Upload CSV File:
    - Click "Upload CSV"
    - Select your prepared CSV file
    - System validates format and data
 
-2. **Upload Document Files:**
+2. Upload Document Files:
    - Click "Upload Documents"
    - Select all PDF files
    - Or drag and drop entire folder
    - System matches files to CSV entries
 
-3. **Review Batch:**
+3. Review Batch:
    ```
    Batch Summary
    ├── Total Documents: 50
@@ -542,20 +542,20 @@ For institutions processing multiple documents, batch operations save significan
    - Row 32: File not found
    ```
 
-4. **Fix Errors:**
+4. Fix Errors:
    - Click on error to see details
    - Edit CSV or upload missing files
    - Re-validate batch
 
-5. **Start Batch Processing:**
+5. Start Batch Processing:
    - Click "Process Batch"
    - Confirm MetaMask transaction (one-time for batch)
    - System processes documents sequentially
    - Progress bar shows completion status
 
-### Monitoring Batch Progress
+Monitoring Batch Progress
 
-1. **Real-time Progress:**
+1. Real-time Progress:
    ```
    Processing Batch: 25/50 documents
    
@@ -566,19 +566,19 @@ For institutions processing multiple documents, batch operations save significan
    ⏸ Remaining: 25 documents
    ```
 
-2. **Pause/Resume:**
+2. Pause/Resume:
    - Click "Pause" to stop processing
    - Resume later from where you left off
    - Useful for large batches or network issues
 
-3. **Error Handling:**
+3. Error Handling:
    - Failed documents are flagged
    - Can retry individual documents
    - Error log available for download
 
-### Batch Completion
+Batch Completion
 
-1. **Summary Report:**
+1. Summary Report:
    ```
    Batch Processing Complete
    
@@ -592,113 +592,113 @@ For institutions processing multiple documents, batch operations save significan
    - Alice Williams: Invalid file format
    ```
 
-2. **Download Results:**
+2. Download Results:
    - CSV with all document hashes
    - QR codes (ZIP file)
    - Verification URLs
    - Error log (if any failures)
 
-3. **Retry Failed Documents:**
+3. Retry Failed Documents:
    - Click "Retry Failed"
    - System attempts to process again
    - Or process individually with corrections
 
-## Best Practices
+Best Practices
 
-### Document Quality
+Document Quality
 
-1. **Use High-Quality Scans:**
+1. Use High-Quality Scans:
    - 300 DPI minimum resolution
    - Color scans for official seals
    - Ensure all text is readable
    - No shadows or distortions
 
-2. **Consistent Formatting:**
+2. Consistent Formatting:
    - Use institution templates
    - Maintain consistent fonts and layouts
    - Include all required elements
    - Follow institutional branding guidelines
 
-3. **Verification Elements:**
+3. Verification Elements:
    - Include official letterhead
    - Add authorized signatures
    - Apply official seals/stamps
    - Include document number/reference
 
-### Data Accuracy
+Data Accuracy
 
-1. **Double-Check Information:**
+1. Double-Check Information:
    - Verify student names (exact spelling)
    - Confirm student IDs
    - Check dates (issue, graduation)
    - Validate program names
 
-2. **Use Standardized Formats:**
+2. Use Standardized Formats:
    - Dates: YYYY-MM-DD
    - Names: First Middle Last
    - IDs: Consistent format (e.g., STU2023001234)
    - Programs: Official names from catalog
 
-3. **Maintain Records:**
+3. Maintain Records:
    - Keep copies of all registered documents
    - Document any corrections or revocations
    - Maintain correspondence with students
    - Archive batch processing logs
 
-### Security
+Security
 
-1. **Protect Your Wallet:**
+1. Protect Your Wallet:
    - Never share your private key or seed phrase
    - Use strong MetaMask password
    - Enable MetaMask password timeout
    - Consider hardware wallet for production
 
-2. **Verify Transactions:**
+2. Verify Transactions:
    - Always review MetaMask transaction details
    - Check gas fees are reasonable
    - Verify contract address is correct
    - Confirm transaction before signing
 
-3. **Access Control:**
+3. Access Control:
    - Only authorized personnel should have issuer role
    - Use separate accounts for different departments
    - Regularly audit issuer accounts
    - Revoke access for former employees
 
-### Efficiency
+Efficiency
 
-1. **Batch Processing:**
+1. Batch Processing:
    - Use batch upload for 10+ documents
    - Process during off-peak hours
    - Prepare all files before starting
    - Monitor progress and handle errors promptly
 
-2. **Template Usage:**
+2. Template Usage:
    - Create document templates
    - Use CSV templates for batch uploads
    - Standardize metadata fields
    - Automate where possible
 
-3. **Communication:**
+3. Communication:
    - Set up automated email notifications
    - Provide clear instructions to students
    - Create FAQ for common questions
    - Maintain support contact information
 
-## Troubleshooting
+Troubleshooting
 
-### Common Issues
+Common Issues
 
-#### Issue: MetaMask Transaction Fails
+Issue: MetaMask Transaction Fails
 
-**Symptoms:**
+Symptoms:
 - "Transaction failed" error
 - "Insufficient funds" message
 - Transaction stuck pending
 
-**Solutions:**
+Solutions:
 
-1. **Check ETH Balance:**
+1. Check ETH Balance:
    ```
    - Open MetaMask
    - Verify you have enough ETH for gas
@@ -706,14 +706,14 @@ For institutions processing multiple documents, batch operations save significan
    - Get more from faucet if needed
    ```
 
-2. **Increase Gas Limit:**
+2. Increase Gas Limit:
    ```
    - Click "Edit" on MetaMask transaction
    - Increase gas limit by 20%
    - Try again
    ```
 
-3. **Clear Pending Transactions:**
+3. Clear Pending Transactions:
    ```
    - Go to MetaMask Settings > Advanced
    - Click "Reset Account"
@@ -721,7 +721,7 @@ For institutions processing multiple documents, batch operations save significan
    - Try uploading again
    ```
 
-4. **Network Congestion:**
+4. Network Congestion:
    ```
    - Check Etherscan for network status
    - Wait 10-15 minutes
@@ -729,16 +729,16 @@ For institutions processing multiple documents, batch operations save significan
    - Consider increasing gas price
    ```
 
-#### Issue: File Upload Fails
+Issue: File Upload Fails
 
-**Symptoms:**
+Symptoms:
 - Upload progress stops
 - "Upload failed" error
 - File not accepted
 
-**Solutions:**
+Solutions:
 
-1. **Check File Requirements:**
+1. Check File What You Need:
    ```
    - Size: Must be under 10MB
    - Format: PDF, DOC, DOCX, JPG, PNG only
@@ -746,7 +746,7 @@ For institutions processing multiple documents, batch operations save significan
    - Convert to PDF if other format
    ```
 
-2. **Network Issues:**
+2. Network Issues:
    ```
    - Check internet connection
    - Try uploading again
@@ -754,7 +754,7 @@ For institutions processing multiple documents, batch operations save significan
    - Disable VPN temporarily
    ```
 
-3. **Browser Issues:**
+3. Browser Issues:
    ```
    - Clear browser cache
    - Try different browser
@@ -762,60 +762,60 @@ For institutions processing multiple documents, batch operations save significan
    - Update browser to latest version
    ```
 
-#### Issue: IPFS Upload Timeout
+Issue: IPFS Upload Timeout
 
-**Symptoms:**
+Symptoms:
 - "IPFS upload failed" error
 - Upload takes very long
 - Timeout message
 
-**Solutions:**
+Solutions:
 
-1. **Retry Upload:**
+1. Retry Upload:
    ```
    - System automatically tries fallback providers
    - Wait for automatic retry
    - Or click "Retry" button
    ```
 
-2. **Check File Size:**
+2. Check File Size:
    ```
    - Large files take longer
    - Compress if over 5MB
    - Split very large documents
    ```
 
-3. **Network Connection:**
+3. Network Connection:
    ```
    - Ensure stable internet
    - Avoid uploading during peak hours
    - Try again in a few minutes
    ```
 
-#### Issue: Document Not Appearing in List
+Issue: Document Not Appearing in List
 
-**Symptoms:**
+Symptoms:
 - Upload successful but document not visible
 - Empty document list
 - Missing recent uploads
 
-**Solutions:**
+Solutions:
 
-1. **Refresh Page:**
+1. Refresh Page:
    ```
    - Click browser refresh
    - Or press F5
    - Wait for page to fully load
    ```
 
-2. **Check Filters:**
+2. Check Filters:
    ```
    - Clear any active filters
    - Check date range selection
    - Verify status filter (Active/All)
    ```
 
-3. **Blockchain Confirmation:**
+3. Blockchain Confirmation:
    ```
    - Transaction may still be pending
    - Check MetaMask for confirmation
@@ -823,23 +823,23 @@ For institutions processing multiple documents, batch operations save significan
    - Refresh page after confirmation
    ```
 
-#### Issue: QR Code Not Generating
+Issue: QR Code Not Generating
 
-**Symptoms:**
+Symptoms:
 - QR code area blank
 - "Failed to generate QR code" error
 - QR code image broken
 
-**Solutions:**
+Solutions:
 
-1. **Regenerate QR Code:**
+1. Regenerate QR Code:
    ```
    - Go to document details
    - Click "Regenerate QR Code"
    - Download new QR code
    ```
 
-2. **Browser Compatibility:**
+2. Browser Compatibility:
    ```
    - Try different browser
    - Enable JavaScript
@@ -847,75 +847,75 @@ For institutions processing multiple documents, batch operations save significan
    - Update browser
    ```
 
-3. **Download Alternative:**
+3. Download Alternative:
    ```
    - Copy verification URL manually
    - Use online QR code generator
    - Generate QR from document hash
    ```
 
-### Getting Help
+Getting Help
 
-#### Self-Service Resources
+Self-Service Resources
 
-1. **Documentation:**
+1. Documentation:
    - User Manual: Complete system guide
    - Video Tutorials: Step-by-step walkthroughs
    - FAQ: Common questions answered
    - API Docs: For technical integration
 
-2. **System Status:**
+2. System Status:
    - Check status page: status.blockchain-docs.com
    - View current incidents
    - Scheduled maintenance notices
    - Service health indicators
 
-#### Contact Support
+Contact Support
 
-**Email Support:**
+Email Support:
 - General: support@blockchain-docs.com
 - Technical: tech-support@blockchain-docs.com
 - Urgent: urgent@blockchain-docs.com
 
-**Response Times:**
+Response Times:
 - General inquiries: 24 hours
 - Technical issues: 4 hours
 - Urgent issues: 1 hour
 - Critical outages: Immediate
 
-**Phone Support:**
+Phone Support:
 - Main: +1-XXX-XXX-XXXX
 - Hours: Monday-Friday, 9 AM - 5 PM EST
 - Emergency: 24/7 for critical issues
 
-**Live Chat:**
+Live Chat:
 - Available: Monday-Friday, 9 AM - 5 PM EST
 - Access from dashboard
 - Average response: 5 minutes
 
-#### Information to Provide
+Information to Provide
 
 When contacting support, include:
 
-1. **Your Information:**
+1. Your Information:
    - Name and institution
    - Wallet address
    - Email address
    - Role (Issuer)
 
-2. **Issue Details:**
+2. Issue Details:
    - What you were trying to do
    - What happened instead
    - Error messages (exact text)
    - Screenshots if possible
 
-3. **Technical Details:**
+3. Technical Details:
    - Browser and version
    - Operating system
    - MetaMask version
    - Transaction hash (if applicable)
 
-4. **Steps to Reproduce:**
+4. Steps to Reproduce:
    - Step 1: Logged in as issuer
    - Step 2: Clicked "Upload Document"
    - Step 3: Selected file and filled form
@@ -923,22 +923,22 @@ When contacting support, include:
 
 ---
 
-## Appendix
+Appendix
 
-### Glossary
+Glossary
 
-- **Blockchain**: Distributed ledger technology that stores data immutably
-- **Document Hash**: Unique cryptographic fingerprint of a document
-- **Gas Fee**: Cost to execute blockchain transactions (paid in ETH)
-- **IPFS**: InterPlanetary File System - decentralized storage network
-- **MetaMask**: Browser extension for interacting with blockchain
-- **Private Key**: Secret key that controls your blockchain account
-- **QR Code**: Scannable code containing verification information
-- **Smart Contract**: Self-executing code on the blockchain
-- **Transaction**: Operation recorded on the blockchain
-- **Wallet Address**: Public identifier for your blockchain account
+- Blockchain: Distributed ledger technology that stores data immutably
+- Document Hash: Unique cryptographic fingerprint of a document
+- Gas Fee: Cost to execute blockchain transactions (paid in ETH)
+- IPFS: InterPlanetary File System - decentralized storage network
+- MetaMask: Browser extension for interacting with blockchain
+- Private Key: Secret key that controls your blockchain account
+- QR Code: Scannable code containing verification information
+- Smart Contract: Self-executing code on the blockchain
+- Transaction: Operation recorded on the blockchain
+- Wallet Address: Public identifier for your blockchain account
 
-### Keyboard Shortcuts
+Keyboard Shortcuts
 
 - `Ctrl/Cmd + U`: Quick upload document
 - `Ctrl/Cmd + F`: Search documents
@@ -946,7 +946,7 @@ When contacting support, include:
 - `Ctrl/Cmd + R`: Refresh document list
 - `Esc`: Close modal/dialog
 
-### Document Type Reference
+Document Type Reference
 
 | Type | Description | Typical Use |
 |------|-------------|-------------|
@@ -958,7 +958,7 @@ When contacting support, include:
 | Transcript | Academic record | University applications |
 | Letter of Recommendation | Reference letter | Applications, employment |
 
-### Gas Fee Estimates
+Gas Fee Estimates
 
 | Operation | Estimated Gas | Cost (Sepolia) | Cost (Mainnet) |
 |-----------|---------------|----------------|----------------|
@@ -967,9 +967,9 @@ When contacting support, include:
 | Revoke Document | 50,000 gas | Free (testnet) | ~$0.20-0.80 |
 | Grant Access | 80,000 gas | Free (testnet) | ~$0.30-1.20 |
 
-*Mainnet costs vary with ETH price and network congestion*
+Mainnet costs vary with ETH price and network congestion
 
-### Quick Reference Card
+Quick Reference Card
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -999,11 +999,12 @@ When contacting support, include:
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** November 27, 2024  
-**Next Review:** May 27, 2025
+Document Version: 1.0  
+Last Updated: November 27, 2024  
+Next Review: May 27, 2025
 
-For the latest version of this guide, visit: https://docs.blockchain-docs.com/issuer-guide
+For the latest version of Hey there! This guide, visit: https://docs.blockchain-docs.com/issuer-guide
+
 
 
 
