@@ -1,5 +1,7 @@
 const request = require('supertest');
 const express = require('express');
+
+// Import actual validation utilities, not mocked ones
 const {
   sanitizeString,
   sanitizeObject,
@@ -13,7 +15,7 @@ const {
   sanitizeRequest,
   ALLOWED_FILE_TYPES,
   FILE_SIZE_LIMITS
-} = require('../utils/validation');
+} = jest.requireActual('../utils/validation');
 
 const {
   handleValidationErrors,
@@ -25,7 +27,7 @@ const {
   validateContentType,
   validateRequestSize,
   securityValidation
-} = require('../middleware/validation');
+} = jest.requireActual('../middleware/validation');
 
 describe('Validation Utils', () => {
   describe('sanitizeString', () => {
@@ -349,7 +351,8 @@ describe('Security Middleware', () => {
       const middlewares = securityValidation({
         enableSQLInjectionPrevention: true,
         enableXSSPrevention: true,
-        enableCommandInjectionPrevention: true
+        enableCommandInjectionPrevention: true,
+        enableSanitization: false // Disable sanitization for this test
       });
 
       app.post('/test', ...middlewares, (req, res) => {

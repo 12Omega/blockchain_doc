@@ -602,26 +602,43 @@ class IPFSService {
       const fs = require('fs');
       const path = require('path');
       
-      // Find the metadata file to get the actual filename
+      // Find all metadata files
       const files = fs.readdirSync(this.localStoragePath);
-      const metadataFile = files.find(f => f.endsWith('.meta.json'));
+      const metadataFiles = files.filter(f => f.endsWith('.meta.json'));
       
-      if (!metadataFile) {
-        throw new Error('Local file metadata not found');
+      if (metadataFiles.length === 0) {
+        throw new Error('No local file metadata found');
       }
       
-      const metadataPath = path.join(this.localStoragePath, metadataFile);
-      const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+      // Find the metadata file that matches this CID
+      let matchedMetadata = null;
+      let matchedMetadataFile = null;
       
-      if (metadata.localCid !== localCid) {
-        throw new Error('Local CID mismatch');
+      for (const metadataFile of metadataFiles) {
+        const metadataPath = path.join(this.localStoragePath, metadataFile);
+        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+        
+        if (metadata.localCid === localCid) {
+          matchedMetadata = metadata;
+          matchedMetadataFile = metadataFile;
+          break;
+        }
       }
       
-      const filePath = path.join(this.localStoragePath, metadata.localFilename);
+      if (!matchedMetadata) {
+        throw new Error(`Local CID not found: ${localCid}`);
+      }
+      
+      const filePath = path.join(this.localStoragePath, matchedMetadata.localFilename);
       
       if (!fs.existsSync(filePath)) {
-        throw new Error('Local file not found');
+        throw new Error(`Local file not found: ${matchedMetadata.localFilename}`);
       }
+      
+      logger.info('Local file retrieved successfully', { 
+        localCid, 
+        filename: matchedMetadata.localFilename 
+      });
       
       return fs.readFileSync(filePath);
       

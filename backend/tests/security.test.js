@@ -1,8 +1,8 @@
 const request = require('supertest');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const User = require('../models/User');
-const { connectDB, disconnectDB, clearDB } = require('./setup');
 const {
   securityValidation,
   preventSQLInjection,
@@ -37,16 +37,16 @@ function generateMockToken() {
 }
 
 describe('Security Validation Tests', () => {
-  beforeAll(async () => {
-    await connectDB();
-  });
-
-  afterAll(async () => {
-    await disconnectDB();
-  });
+  // Use the global test setup from setup.js
+  // No need for additional database setup here
 
   beforeEach(async () => {
-    await clearDB();
+    // Clear collections if needed
+    const collections = mongoose.connection.collections;
+    for (const key in collections) {
+      const collection = collections[key];
+      await collection.deleteMany({});
+    }
   });
 
   describe('SQL Injection Prevention', () => {

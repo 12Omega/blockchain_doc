@@ -1,7 +1,14 @@
 const fc = require('fast-check');
-const encryptionService = require('../services/encryptionService');
+
+// Import the actual encryption service, not the mocked one
+const encryptionService = jest.requireActual('../services/encryptionService');
 
 describe('Encryption Service - Property-Based Tests', () => {
+  
+  // Clear any existing mocks before each test
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   
   /**
    * Feature: academic-document-blockchain-verification, Property 1: Hash Determinism

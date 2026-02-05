@@ -131,27 +131,25 @@ router.put('/profile',
   // Authentication
   authenticateToken,
   // Input validation
-  [
-    body('profile.name')
-      .optional()
-      .trim()
-      .isLength({ min: 1, max: 100 })
-      .withMessage('Name must be between 1 and 100 characters'),
-    body('profile.email')
-      .optional()
-      .isEmail()
-      .withMessage('Invalid email format'),
-    body('profile.organization')
-      .optional()
-      .trim()
-      .isLength({ min: 1, max: 200 })
-      .withMessage('Organization name must be between 1 and 200 characters'),
-    body('profile.department')
-      .optional()
-      .trim()
-      .isLength({ max: 100 })
-      .withMessage('Department must be less than 100 characters')
-  ],
+  body('profile.name')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Name must be between 1 and 100 characters'),
+  body('profile.email')
+    .optional()
+    .isEmail()
+    .withMessage('Invalid email format'),
+  body('profile.organization')
+    .optional()
+    .trim()
+    .isLength({ min: 1, max: 200 })
+    .withMessage('Organization name must be between 1 and 200 characters'),
+  body('profile.department')
+    .optional()
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Department must be less than 100 characters'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -213,17 +211,15 @@ router.put('/:walletAddress/role',
   requireRole('admin'),
   
   // Input validation
-  [
-    param('walletAddress').custom(value => {
-      if (!/^0x[a-fA-F0-9]{40}$/.test(value)) {
-        throw new Error('Invalid wallet address format');
-      }
-      return true;
-    }),
-    body('role')
-      .isIn(['admin', 'issuer', 'verifier', 'student'])
-      .withMessage('Invalid role')
-  ],
+  param('walletAddress').custom(value => {
+    if (!/^0x[a-fA-F0-9]{40}$/.test(value)) {
+      throw new Error('Invalid wallet address format');
+    }
+    return true;
+  }),
+  body('role')
+    .isIn(['admin', 'issuer', 'verifier', 'student'])
+    .withMessage('Invalid role'),
   handleValidationErrors,
   async (req, res) => {
     try {

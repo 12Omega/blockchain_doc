@@ -258,7 +258,7 @@ const DocumentViewer = ({ document, onDownload }) => {
                 {document.ipfsHash && (
                   <ListItem>
                     <ListItemIcon>
-                      <CloudDownload />
+                      <DownloadIcon />
                     </ListItemIcon>
                     <ListItemText
                       primary="IPFS Hash"

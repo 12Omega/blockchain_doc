@@ -319,13 +319,13 @@ const validationRules = {
 
   // Pagination validation
   pagination: {
-    page: query('page')
+    page: param('page')
       .optional()
       .isInt({ min: 1 })
       .withMessage('Page must be a positive integer')
       .toInt(),
     
-    limit: query('limit')
+    limit: param('limit')
       .optional()
       .isInt({ min: 1, max: 100 })
       .withMessage('Limit must be between 1 and 100')

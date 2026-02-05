@@ -1,7 +1,14 @@
 const fc = require('fast-check');
-const qrcodeService = require('../services/qrcodeService');
+
+// Import the actual QR code service, not the mocked one
+const qrcodeService = jest.requireActual('../services/qrcodeService');
 
 describe('QR Code Service - Property-Based Tests', () => {
+  
+  // Clear any existing mocks before each test
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   
   /**
    * Feature: academic-document-blockchain-verification, Property 2: QR Code Round Trip

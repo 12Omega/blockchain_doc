@@ -26,7 +26,7 @@ describe("Encryption and Key Management Security Tests", () => {
     test("should use strong encryption algorithms", () => {
       // Test that AES-256-GCM is used (industry standard)
       const algorithm = "aes-256-gcm";
-      const cipher = crypto.createCipherGCM(algorithm, testKey, testIv);
+      const cipher = crypto.createCipher(algorithm, testKey);
 
       expect(cipher).toBeDefined();
       expect(algorithm).toContain("256"); // Strong key size

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import authService from './services/authService';
-import { AuthProvider } from './contexts/AuthContext';
 
 // Import login components
 import LoginSelection from './components/Auth/LoginSelection';
@@ -9,20 +8,12 @@ import AdminLogin from './components/Auth/AdminLogin';
 import StudentLogin from './components/Auth/StudentLogin';
 
 // Import dashboard components
-import EnhancedAdminDashboard from './components/AdminDashboard/EnhancedAdminDashboard';
-import EnhancedStudentPortal from './components/StudentPortal/EnhancedStudentPortal';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import StudentPortal from './components/StudentPortal/StudentPortal';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 function App() {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
-}
-
-function AppContent() {
   const [currentView, setCurrentView] = useState('loginSelection'); // loginSelection, adminLogin, studentLogin, dashboard
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
@@ -86,14 +77,6 @@ function AppContent() {
     setCurrentView('dashboard');
   };
 
-  // Handle demo login
-  const handleDemoLogin = (userData, role) => {
-    setUser(userData);
-    setUserRole(role);
-    setIsAuthenticated(true);
-    setCurrentView('dashboard');
-  };
-
   // Handle logout
   const handleLogout = () => {
     authService.logout();
@@ -123,12 +106,12 @@ function AppContent() {
     switch (userRole) {
       case 'admin':
       case 'issuer':
-        return <EnhancedAdminDashboard {...dashboardProps} />;
+        return <AdminDashboard {...dashboardProps} />;
       case 'student':
       case 'verifier':
-        return <EnhancedStudentPortal {...dashboardProps} />;
+        return <StudentPortal {...dashboardProps} />;
       default:
-        return <EnhancedStudentPortal {...dashboardProps} />;
+        return <StudentPortal {...dashboardProps} />;
     }
   };
 
@@ -226,7 +209,7 @@ function AppContent() {
       );
     
     default:
-      return <LoginSelection onRoleSelect={handleRoleSelect} onDemoLogin={handleDemoLogin} />;
+      return <LoginSelection onRoleSelect={handleRoleSelect} />;
   }
 }
 

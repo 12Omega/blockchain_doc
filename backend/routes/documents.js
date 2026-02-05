@@ -96,6 +96,312 @@ const upload = multer({
   }
 });
 
+// @route   POST /api/documents/student-upload
+// @desc    Allow students to upload their own documents
+// @access  Private (Student role)
+router.post('/student-upload',
+  // Authentication
+  authenticateToken,
+  
+  // File upload
+  upload.single('document'),
+  
+  // Input validation
+  body('studentName')
+    .notEmpty()
+    .withMessage('Student name is required')
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Student name must be between 1 and 100 characters'),
+  body('documentType')
+    .isIn(['degree', 'certificate', 'transcript', 'diploma', 'other'])
+    .withMessage('Invalid document type'),
+  body('issueDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Invalid date format'),
+  body('course')
+    .optional()
+    .isLength({ max: 200 })
+    .withMessage('Course must be less than 200 characters'),
+  body('grade')
+    .optional()
+    .isLength({ max: 20 })
+    .withMessage('Grade must be less than 20 characters'),
+  body('description')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Description must be less than 500 characters'),
+  handleValidationErrors,
+  async (req, res) => {
+    let document = null;
+    let ipfsResult = null;
+
+    try {
+      // Check validation errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          success: false,
+          error: 'Validation failed',
+          details: errors.array()
+        });
+      }
+
+      // Check if file was uploaded
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          error: 'No file uploaded'
+        });
+      }
+
+      const student = req.user;
+      const fileBuffer = req.file.buffer;
+      const {
+        studentName,
+        documentType,
+        issueDate,
+        course,
+        grade,
+        description
+      } = req.body;
+
+      logger.info('Starting student document upload process', {
+        filename: req.file.originalname,
+        size: req.file.size,
+        student: student.walletAddress
+      });
+
+      // Step 1: Generate document hash
+      const documentHash = encryptionService.generateFileHash(fileBuffer);
+      logger.info('Document hash generated', { documentHash });
+
+      // Check if document already exists
+      const existingDocument = await Document.findOne({ documentHash });
+      if (existingDocument) {
+        return res.status(409).json({
+          success: false,
+          error: 'Document with this hash already exists',
+          documentHash
+        });
+      }
+
+      // Step 2: Encrypt document
+      const encryptionKey = encryptionService.generateKey();
+      const encryptedData = encryptionService.encryptFile(fileBuffer, encryptionKey);
+      logger.info('Document encrypted', { documentHash });
+
+      // Step 3: Upload to IPFS
+      const encryptedBuffer = Buffer.from(JSON.stringify(encryptedData));
+      ipfsResult = await ipfsService.uploadFile(
+        encryptedBuffer,
+        `encrypted_${req.file.originalname}`,
+        {
+          documentHash,
+          studentId: student.walletAddress.substring(0, 10),
+          documentType,
+          issuer: student.walletAddress // Student is both owner and issuer for self-uploaded docs
+        },
+        true
+      );
+      logger.info('Document uploaded to IPFS', { 
+        documentHash, 
+        ipfsCid: ipfsResult.cid,
+        provider: ipfsResult.provider 
+      });
+
+      // Prepare metadata
+      const metadata = {
+        studentName: studentName || student.profile?.name || 'Student',
+        studentId: student.walletAddress.substring(0, 10), // Use wallet address as student ID
+        institutionName: 'Self-Uploaded', // Mark as self-uploaded
+        documentType,
+        issueDate: issueDate ? new Date(issueDate) : new Date(),
+        course,
+        grade,
+        description
+      };
+
+      // Encrypt encryption key for storage
+      const encryptedKeyData = encryptionService.encryptKeyForStorage(encryptionKey);
+
+      // Step 4: Create document record in MongoDB
+      document = new Document({
+        documentHash,
+        ipfsHash: ipfsResult.cid,
+        encryptionKey: JSON.stringify(encryptedKeyData),
+        metadata,
+        access: {
+          owner: student.walletAddress,
+          issuer: student.walletAddress, // Student is both owner and issuer
+          authorizedViewers: []
+        },
+        audit: {
+          uploadedBy: student._id
+        },
+        fileInfo: {
+          originalName: req.file.originalname,
+          mimeType: req.file.mimetype,
+          size: req.file.size
+        },
+        status: 'uploaded'
+      });
+
+      await document.save();
+      logger.info('Document metadata saved to database', { documentHash });
+
+      // Step 5: Try to register on blockchain (optional for student uploads)
+      let blockchainResult = null;
+      try {
+        blockchainResult = await blockchainService.registerDocument(
+          documentHash,
+          ipfsResult.cid,
+          student.walletAddress,
+          {
+            studentId: metadata.studentId,
+            documentType,
+            institutionName: metadata.institutionName,
+            issueDate: metadata.issueDate.toISOString()
+          }
+        );
+
+        // Update document with blockchain info
+        await document.updateBlockchainInfo(
+          blockchainResult.transactionHash,
+          blockchainResult.blockNumber,
+          blockchainResult.gasUsed,
+          blockchainResult.contractAddress
+        );
+
+        logger.info('Document registered on blockchain', {
+          documentHash,
+          transactionHash: blockchainResult.transactionHash,
+          blockNumber: blockchainResult.blockNumber
+        });
+
+      } catch (blockchainError) {
+        logger.warn('Blockchain registration failed for student upload', {
+          documentHash,
+          error: blockchainError.message
+        });
+        // For student uploads, blockchain failure is not critical
+        // Document is still saved and can be used
+      }
+
+      // Step 6: Generate QR code (optional)
+      let qrCodeData = null;
+      try {
+        qrCodeData = await qrcodeService.generateQRCode(
+          documentHash,
+          blockchainResult?.transactionHash
+        );
+        logger.info('QR code generated', { documentHash });
+      } catch (qrError) {
+        logger.warn('QR code generation failed', {
+          documentHash,
+          error: qrError.message
+        });
+      }
+
+      // Step 7: Return response
+      const response = {
+        success: true,
+        message: 'Document uploaded successfully',
+        data: {
+          document: {
+            id: document._id,
+            documentHash,
+            transactionId: blockchainResult?.transactionHash,
+            ipfsCid: ipfsResult.cid,
+            metadata: {
+              studentName: metadata.studentName,
+              studentId: metadata.studentId,
+              institutionName: metadata.institutionName,
+              documentType: metadata.documentType,
+              issueDate: metadata.issueDate,
+              course: metadata.course,
+              grade: metadata.grade
+            },
+            blockchain: blockchainResult ? {
+              transactionHash: blockchainResult.transactionHash,
+              blockNumber: blockchainResult.blockNumber,
+              gasUsed: blockchainResult.gasUsed,
+              contractAddress: blockchainResult.contractAddress,
+              explorerUrl: `${process.env.BLOCKCHAIN_EXPLORER_URL || 'https://sepolia.etherscan.io'}/tx/${blockchainResult.transactionHash}`
+            } : {
+              message: 'Blockchain registration pending or failed - document still secure in IPFS'
+            },
+            ipfs: {
+              cid: ipfsResult.cid,
+              gateway: ipfsResult.gateway,
+              provider: ipfsResult.provider
+            },
+            qrCode: qrCodeData ? {
+              dataUrl: qrCodeData.qrCodeDataUrl,
+              verificationUrl: qrCodeData.verificationUrl
+            } : null,
+            access: {
+              owner: document.access.owner,
+              issuer: document.access.issuer
+            },
+            fileInfo: {
+              originalName: document.fileInfo.originalName,
+              mimeType: document.fileInfo.mimeType,
+              size: document.fileInfo.size
+            },
+            status: document.status,
+            createdAt: document.audit.createdAt
+          }
+        }
+      };
+
+      logger.info('Student document upload completed successfully', {
+        documentHash,
+        transactionHash: blockchainResult?.transactionHash,
+        student: student.walletAddress
+      });
+
+      res.status(201).json(response);
+
+    } catch (error) {
+      logger.error('Student document upload failed:', {
+        error: error.message,
+        stack: error.stack,
+        student: req.user?.walletAddress,
+        filename: req.file?.originalname
+      });
+
+      // Rollback logic
+      try {
+        if (document && document._id) {
+          await Document.findByIdAndUpdate(document._id, { 
+            status: 'failed',
+            'audit.updatedAt': new Date()
+          });
+          logger.info('Document marked as failed in database', { 
+            documentId: document._id 
+          });
+        }
+      } catch (rollbackError) {
+        logger.error('Rollback failed:', {
+          error: rollbackError.message,
+          documentId: document?._id
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'Document upload failed',
+        message: error.message,
+        details: process.env.NODE_ENV === 'development' ? {
+          error: error.message,
+          stack: error.stack
+        } : undefined
+      });
+    }
+  }
+);
+
 // @route   POST /api/documents/register
 // @desc    Register document with complete flow: hash, encrypt, IPFS upload, blockchain registration, QR code generation
 // @access  Private (Issuer role required)
@@ -108,49 +414,47 @@ router.post('/register',
   upload.single('document'),
   
   // Input validation
-  [
-    body('studentName')
-      .notEmpty()
-      .withMessage('Student name is required')
-      .isLength({ min: 1, max: 100 })
-      .withMessage('Student name must be between 1 and 100 characters'),
-    body('studentId')
-      .notEmpty()
-      .withMessage('Student ID is required'),
-    body('ownerName')
-      .notEmpty()
-      .withMessage('Owner name is required')
-      .isLength({ min: 1, max: 100 })
-      .withMessage('Owner name must be between 1 and 100 characters'),
-    body('documentType')
-      .isIn(['degree', 'certificate', 'transcript', 'diploma', 'other'])
-      .withMessage('Invalid document type'),
-    body('issueDate')
-      .notEmpty()
-      .withMessage('Issue date is required')
-      .isISO8601()
-      .withMessage('Invalid date format'),
-    body('expiryDate')
-      .optional()
-      .isISO8601()
-      .withMessage('Invalid date format'),
-    body('grade')
-      .optional()
-      .isLength({ max: 20 })
-      .withMessage('Grade must be less than 20 characters'),
-    body('course')
-      .optional()
-      .isLength({ max: 200 })
-      .withMessage('Course must be less than 200 characters'),
-    body('description')
-      .optional()
-      .isLength({ max: 500 })
-      .withMessage('Description must be less than 500 characters'),
-    body('ownerAddress')
-      .optional()
-      .matches(/^0x[a-fA-F0-9]{40}$/)
-      .withMessage('Invalid wallet address format')
-  ],
+  body('studentName')
+    .notEmpty()
+    .withMessage('Student name is required')
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Student name must be between 1 and 100 characters'),
+  body('studentId')
+    .notEmpty()
+    .withMessage('Student ID is required'),
+  body('ownerName')
+    .notEmpty()
+    .withMessage('Owner name is required')
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Owner name must be between 1 and 100 characters'),
+  body('documentType')
+    .isIn(['degree', 'certificate', 'transcript', 'diploma', 'other'])
+    .withMessage('Invalid document type'),
+  body('issueDate')
+    .notEmpty()
+    .withMessage('Issue date is required')
+    .isISO8601()
+    .withMessage('Invalid date format'),
+  body('expiryDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Invalid date format'),
+  body('grade')
+    .optional()
+    .isLength({ max: 20 })
+    .withMessage('Grade must be less than 20 characters'),
+  body('course')
+    .optional()
+    .isLength({ max: 200 })
+    .withMessage('Course must be less than 200 characters'),
+  body('description')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Description must be less than 500 characters'),
+  body('ownerAddress')
+    .optional()
+    .matches(/^0x[a-fA-F0-9]{40}$/)
+    .withMessage('Invalid wallet address format'),
   handleValidationErrors,
   async (req, res) => {
     let document = null;
@@ -475,25 +779,18 @@ router.post('/upload',
   
   // File upload
   upload.single('document'),
-  validateFile({
-    required: true,
-    allowedTypes: ALLOWED_FILE_TYPES.documents,
-    maxSize: FILE_SIZE_LIMITS.document
-  }),
   
   // Input validation
-  [
-    validationRules.name('metadata.studentName', true),
-    validationRules.studentId('metadata.studentId'),
-    validationRules.name('metadata.ownerName', true),
-    validationRules.documentType('metadata.documentType'),
-    validationRules.date('metadata.issueDate', true),
-    validationRules.date('metadata.expiryDate', false),
-    validationRules.text('metadata.grade', 20, false),
-    validationRules.text('metadata.course', 200, false),
-    validationRules.text('metadata.description', 500, false),
-    validationRules.walletAddress('ownerAddress').optional()
-  ],
+  validationRules.name('metadata.studentName', true),
+  validationRules.studentId('metadata.studentId'),
+  validationRules.name('metadata.ownerName', true),
+  validationRules.documentType('metadata.documentType'),
+  validationRules.date('metadata.issueDate', true),
+  validationRules.date('metadata.expiryDate', false),
+  validationRules.text('metadata.grade', 20, false),
+  validationRules.text('metadata.course', 200, false),
+  validationRules.text('metadata.description', 500, false),
+  validationRules.walletAddress('ownerAddress').optional(),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -863,17 +1160,10 @@ router.post('/verify',
   
   // File upload (optional)
   upload.single('document'),
-  validateFile({
-    required: false,
-    allowedTypes: ALLOWED_FILE_TYPES.documents,
-    maxSize: FILE_SIZE_LIMITS.document
-  }),
   
   // Input validation
-  [
-    validationRules.documentHash('documentHash').optional(),
-    body('qrCode').optional().isString().withMessage('QR code must be a string')
-  ],
+  validationRules.documentHash('documentHash').optional(),
+  body('qrCode').optional().isString().withMessage('QR code must be a string'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -1158,6 +1448,53 @@ router.post('/verify',
   }
 );
 
+// @route   POST /api/documents/verify-hash
+// @desc    Verify document by hash only (simple verification)
+// @access  Public
+router.post('/verify-hash',
+  body('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
+  handleValidationErrors,
+  async (req, res) => {
+    try {
+      const { documentHash } = req.body;
+
+      // Find document in database
+      const document = await Document.findOne({ documentHash, isActive: true })
+        .populate('audit.uploadedBy', 'walletAddress profile.name');
+
+      if (!document) {
+        return res.status(404).json({
+          success: false,
+          error: 'Document not found'
+        });
+      }
+
+      // Simple verification - just check if document exists
+      res.json({
+        success: true,
+        data: {
+          verified: true,
+          documentHash,
+          metadata: {
+            title: document.metadata.studentName + "'s " + document.metadata.documentType,
+            type: document.metadata.documentType,
+            owner: document.access.owner,
+            issuer: document.access.issuer,
+            createdAt: document.audit.createdAt
+          }
+        }
+      });
+
+    } catch (error) {
+      logger.error('Hash verification failed:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Verification failed'
+      });
+    }
+  }
+);
+
 // @route   GET /api/documents/verify/:documentHash
 // @desc    Get verification status of a document
 // @access  Private
@@ -1292,12 +1629,87 @@ router.post('/:documentHash/download',
         ipfsHash: document.ipfsHash
       });
 
-      // Retrieve encrypted file from IPFS
+      // Retrieve encrypted file from IPFS/local storage
       const encryptedBuffer = await ipfsService.retrieveFile(document.ipfsHash);
-      const encryptedData = JSON.parse(encryptedBuffer.toString());
-
-      // Decrypt file
-      const decryptedBuffer = encryptionService.decryptFile(encryptedData, document.encryptionKey);
+      
+      logger.info('Retrieved file from storage', {
+        documentHash,
+        ipfsHash: document.ipfsHash,
+        bufferSize: encryptedBuffer.length,
+        firstBytes: encryptedBuffer.slice(0, 20).toString('hex')
+      });
+      
+      let decryptedBuffer;
+      
+      try {
+        // Try to parse the buffer as JSON to get encrypted data object
+        const bufferString = encryptedBuffer.toString('utf8');
+        
+        // Check if it looks like JSON (starts with '{')
+        if (bufferString.trim().startsWith('{')) {
+          logger.info('File appears to be JSON format');
+          const encryptedData = JSON.parse(bufferString);
+          
+          logger.info('Successfully parsed encrypted data', {
+            documentHash,
+            hasEncryptedData: !!encryptedData.encryptedData,
+            hasIV: !!encryptedData.iv,
+            algorithm: encryptedData.algorithm
+          });
+          
+          // Decrypt file using the stored encryption key
+          // The encryptionKey in document is a JSON string containing encrypted key data
+          // We need to decrypt it first using decryptKeyFromStorage
+          let encryptionKeyToUse;
+          try {
+            const encryptedKeyData = JSON.parse(document.encryptionKey);
+            // Decrypt the encryption key from storage
+            encryptionKeyToUse = encryptionService.decryptKeyFromStorage(encryptedKeyData);
+            
+            logger.info('Decrypted encryption key from storage', {
+              documentHash,
+              keyLength: encryptionKeyToUse.length
+            });
+          } catch (e) {
+            logger.error('Failed to decrypt encryption key from storage', {
+              documentHash,
+              error: e.message
+            });
+            // Fallback: try using the key from encrypted data itself
+            encryptionKeyToUse = encryptedData.encryptionKey;
+          }
+          
+          decryptedBuffer = encryptionService.decryptFile(encryptedData, encryptionKeyToUse);
+        } else {
+          // Legacy format: File is raw encrypted buffer without JSON wrapper
+          // This shouldn't happen with current code, but handle it for old uploads
+          logger.warn('File is in legacy binary format, cannot decrypt without IV', {
+            documentHash,
+            ipfsHash: document.ipfsHash
+          });
+          
+          return res.status(500).json({
+            success: false,
+            error: 'Document is in an incompatible legacy format and cannot be downloaded. Please re-upload the document.'
+          });
+        }
+        
+        logger.info('Document decrypted successfully', { documentHash });
+      } catch (parseError) {
+        logger.error('Failed to parse or decrypt document', {
+          documentHash,
+          error: parseError.message,
+          stack: parseError.stack,
+          ipfsHash: document.ipfsHash,
+          bufferSize: encryptedBuffer.length
+        });
+        
+        return res.status(500).json({
+          success: false,
+          error: 'Failed to decrypt document. The file may be corrupted or in an incompatible format. Please re-upload the document.',
+          details: process.env.NODE_ENV === 'development' ? parseError.message : undefined
+        });
+      }
 
       // Verify file integrity
       const isIntegrityValid = encryptionService.verifyFileIntegrity(decryptedBuffer, documentHash);
@@ -1627,9 +2039,7 @@ router.post('/:documentHash/share',
 router.delete('/:documentHash/share',
   authenticateToken,
   param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
-  [
-    body('viewerAddress').matches(/^0x[a-fA-F0-9]{40}$/).withMessage('Invalid viewer address format')
-  ],
+  body('viewerAddress').matches(/^0x[a-fA-F0-9]{40}$/).withMessage('Invalid viewer address format'),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -1888,11 +2298,9 @@ router.post('/:documentHash/access/grant',
   authenticateToken,
   
   // Input validation
-  [
-    param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
-    validationRules.walletAddress('userAddress'),
-    validationRules.date('expiresAt', false)
-  ],
+  param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
+  validationRules.walletAddress('userAddress'),
+  validationRules.date('expiresAt', false),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -2048,10 +2456,8 @@ router.post('/:documentHash/access/revoke',
   authenticateToken,
   
   // Input validation
-  [
-    param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
-    validationRules.walletAddress('userAddress')
-  ],
+  param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
+  validationRules.walletAddress('userAddress'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -2196,9 +2602,7 @@ router.get('/user/:address',
   authenticateToken,
   
   // Input validation
-  [
-    param('address').matches(/^0x[a-fA-F0-9]{40}$/).withMessage('Invalid wallet address format')
-  ],
+  param('address').matches(/^0x[a-fA-F0-9]{40}$/).withMessage('Invalid wallet address format'),
   handleValidationErrors,
   dataMinimization(['profile.email', 'metadata.studentName']),
   async (req, res) => {
@@ -2356,10 +2760,8 @@ router.post('/:documentHash/deactivate',
   authenticateToken,
   
   // Input validation
-  [
-    param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
-    body('reason').isString().trim().isLength({ min: 10, max: 500 }).withMessage('Reason must be between 10 and 500 characters')
-  ],
+  param('documentHash').matches(/^0x[a-fA-F0-9]{64}$/).withMessage('Invalid document hash format'),
+  body('reason').isString().trim().isLength({ min: 10, max: 500 }).withMessage('Reason must be between 10 and 500 characters'),
   handleValidationErrors,
   async (req, res) => {
     try {

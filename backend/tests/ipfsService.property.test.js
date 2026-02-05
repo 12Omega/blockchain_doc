@@ -1,5 +1,7 @@
 const fc = require('fast-check');
-const ipfsService = require('../services/ipfsService');
+
+// Import the actual IPFS service, not the mocked one
+const ipfsService = jest.requireActual('../services/ipfsService');
 const axios = require('axios');
 
 // Mock axios for testing
@@ -7,7 +9,9 @@ jest.mock('axios');
 
 describe('IPFS Service Property-Based Tests', () => {
   
+  // Clear any existing mocks before each test
   beforeEach(() => {
+    jest.clearAllMocks();
     jest.clearAllMocks();
     // Reset upload queue
     ipfsService.uploadQueue = [];

@@ -13,14 +13,16 @@ describe('Privacy Service', () => {
   let testUserId;
   let mockReq;
 
-  beforeAll(async () => {
-    // Connect to test database
-    const mongoUri = process.env.MONGODB_TEST_URI || 'mongodb://localhost:27017/blockchain-doc-test';
-    await mongoose.connect(mongoUri);
-  });
+  // Use the global test setup from setup.js
+  // No need for additional database setup here
 
-  afterAll(async () => {
-    await mongoose.connection.close();
+  beforeEach(async () => {
+    // Clear collections if needed
+    const collections = mongoose.connection.collections;
+    for (const key in collections) {
+      const collection = collections[key];
+      await collection.deleteMany({});
+    }
   });
 
   beforeEach(async () => {

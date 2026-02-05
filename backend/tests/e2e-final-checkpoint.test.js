@@ -12,6 +12,9 @@ const User = require('../models/User');
 const Document = require('../models/Document');
 const VerificationLog = require('../models/VerificationLog');
 
+// Store original console for logging
+const originalConsole = console;
+
 describe('Final Checkpoint - End-to-End Testing', () => {
   jest.setTimeout(120000);
 

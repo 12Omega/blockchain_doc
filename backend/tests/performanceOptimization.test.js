@@ -1,7 +1,8 @@
-const cacheService = require('../services/cacheService');
-const dbOptimizationService = require('../services/databaseOptimizationService');
-const batchProcessingService = require('../services/batchProcessingService');
-const blockchainOptimizationService = require('../services/blockchainOptimizationService');
+// Import actual services for testing
+const cacheService = jest.requireActual('../services/cacheService');
+const dbOptimizationService = jest.requireActual('../services/databaseOptimizationService');
+const batchProcessingService = jest.requireActual('../services/batchProcessingService');
+const blockchainOptimizationService = jest.requireActual('../services/blockchainOptimizationService');
 
 // Mock dependencies
 jest.mock('../utils/logger');

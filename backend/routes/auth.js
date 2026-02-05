@@ -22,13 +22,11 @@ const router = express.Router();
 router.post(
   "/nonce",
   // Basic validation
-  [
-    body('walletAddress')
-      .notEmpty()
-      .withMessage('Wallet address is required')
-      .matches(/^0x[a-fA-F0-9]{40}$/)
-      .withMessage('Invalid wallet address format')
-  ],
+  body('walletAddress')
+    .notEmpty()
+    .withMessage('Wallet address is required')
+    .matches(/^0x[a-fA-F0-9]{40}$/)
+    .withMessage('Invalid wallet address format'),
   handleValidationErrors,
   // Auth middleware
   async (req, res) => {
@@ -90,22 +88,20 @@ router.post(
 router.post(
   "/verify",
   // Basic validation
-  [
-    body('walletAddress')
-      .notEmpty()
-      .withMessage('Wallet address is required')
-      .matches(/^0x[a-fA-F0-9]{40}$/)
-      .withMessage('Invalid wallet address format'),
-    body("signature")
-      .notEmpty()
-      .withMessage("Signature is required"),
-    body("message")
-      .notEmpty()
-      .withMessage("Message is required"),
-    body("nonce")
-      .notEmpty()
-      .withMessage("Nonce is required")
-  ],
+  body('walletAddress')
+    .notEmpty()
+    .withMessage('Wallet address is required')
+    .matches(/^0x[a-fA-F0-9]{40}$/)
+    .withMessage('Invalid wallet address format'),
+  body("signature")
+    .notEmpty()
+    .withMessage("Signature is required"),
+  body("message")
+    .notEmpty()
+    .withMessage("Message is required"),
+  body("nonce")
+    .notEmpty()
+    .withMessage("Nonce is required"),
   handleValidationErrors,
   // Auth middleware
   async (req, res) => {
@@ -312,13 +308,11 @@ router.get("/me", authenticateToken, async (req, res) => {
 router.post(
   "/register",
   // Basic validation
-  [
-    body('walletAddress')
-      .notEmpty()
-      .withMessage('Wallet address is required')
-      .matches(/^0x[a-fA-F0-9]{40}$/)
-      .withMessage('Invalid wallet address format')
-  ],
+  body('walletAddress')
+    .notEmpty()
+    .withMessage('Wallet address is required')
+    .matches(/^0x[a-fA-F0-9]{40}$/)
+    .withMessage('Invalid wallet address format'),
   handleValidationErrors,
   
   async (req, res) => {

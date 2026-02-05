@@ -30,26 +30,24 @@ const handleValidationErrors = (req, res, next) => {
  */
 router.post('/consent',
   auth,
-  [
-    body('consentType')
-      .isIn(['data_processing', 'document_storage', 'blockchain_storage', 'analytics', 'marketing', 'third_party_sharing', 'audit_logging'])
-      .withMessage('Invalid consent type'),
-    body('consentGiven')
-      .isBoolean()
-      .withMessage('Consent given must be a boolean'),
-    body('purpose')
-      .optional()
-      .isLength({ min: 10, max: 500 })
-      .withMessage('Purpose must be between 10 and 500 characters'),
-    body('dataCategories')
-      .optional()
-      .isArray()
-      .withMessage('Data categories must be an array'),
-    body('legalBasis')
-      .optional()
-      .isIn(['consent', 'contract', 'legal_obligation', 'vital_interests', 'public_task', 'legitimate_interests'])
-      .withMessage('Invalid legal basis')
-  ],
+  body('consentType')
+    .isIn(['data_processing', 'document_storage', 'blockchain_storage', 'analytics', 'marketing', 'third_party_sharing', 'audit_logging'])
+    .withMessage('Invalid consent type'),
+  body('consentGiven')
+    .isBoolean()
+    .withMessage('Consent given must be a boolean'),
+  body('purpose')
+    .optional()
+    .isLength({ min: 10, max: 500 })
+    .withMessage('Purpose must be between 10 and 500 characters'),
+  body('dataCategories')
+    .optional()
+    .isArray()
+    .withMessage('Data categories must be an array'),
+  body('legalBasis')
+    .optional()
+    .isIn(['consent', 'contract', 'legal_obligation', 'vital_interests', 'public_task', 'legitimate_interests'])
+    .withMessage('Invalid legal basis'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -142,11 +140,9 @@ router.get('/consent',
  */
 router.post('/consent/withdraw',
   auth,
-  [
-    body('consentType')
-      .isIn(['data_processing', 'document_storage', 'blockchain_storage', 'analytics', 'marketing', 'third_party_sharing', 'audit_logging'])
-      .withMessage('Invalid consent type')
-  ],
+  body('consentType')
+    .isIn(['data_processing', 'document_storage', 'blockchain_storage', 'analytics', 'marketing', 'third_party_sharing', 'audit_logging'])
+    .withMessage('Invalid consent type'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -187,22 +183,20 @@ router.post('/consent/withdraw',
  */
 router.post('/delete-request',
   auth,
-  [
-    body('requestType')
-      .isIn(['full_deletion', 'partial_deletion', 'anonymization', 'data_export'])
-      .withMessage('Invalid request type'),
-    body('reason')
-      .isIn(['gdpr_right_to_erasure', 'user_request', 'data_retention_expired', 'consent_withdrawn', 'other'])
-      .withMessage('Invalid reason'),
-    body('dataCategories')
-      .optional()
-      .isArray()
-      .withMessage('Data categories must be an array'),
-    body('specificDocuments')
-      .optional()
-      .isArray()
-      .withMessage('Specific documents must be an array')
-  ],
+  body('requestType')
+    .isIn(['full_deletion', 'partial_deletion', 'anonymization', 'data_export'])
+    .withMessage('Invalid request type'),
+  body('reason')
+    .isIn(['gdpr_right_to_erasure', 'user_request', 'data_retention_expired', 'consent_withdrawn', 'other'])
+    .withMessage('Invalid reason'),
+  body('dataCategories')
+    .optional()
+    .isArray()
+    .withMessage('Data categories must be an array'),
+  body('specificDocuments')
+    .optional()
+    .isArray()
+    .withMessage('Specific documents must be an array'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -254,14 +248,12 @@ router.post('/delete-request',
  */
 router.post('/delete-request/:requestId/verify',
   auth,
-  [
-    param('requestId')
-      .isMongoId()
-      .withMessage('Invalid request ID'),
-    body('verificationCode')
-      .isLength({ min: 10 })
-      .withMessage('Invalid verification code')
-  ],
+  param('requestId')
+    .isMongoId()
+    .withMessage('Invalid request ID'),
+  body('verificationCode')
+    .isLength({ min: 10 })
+    .withMessage('Invalid verification code'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -308,16 +300,14 @@ router.post('/delete-request/:requestId/verify',
  */
 router.post('/export-request',
   auth,
-  [
-    body('exportFormat')
-      .optional()
-      .isIn(['json', 'csv', 'xml', 'pdf'])
-      .withMessage('Invalid export format'),
-    body('dataCategories')
-      .optional()
-      .isArray()
-      .withMessage('Data categories must be an array')
-  ],
+  body('exportFormat')
+    .optional()
+    .isIn(['json', 'csv', 'xml', 'pdf'])
+    .withMessage('Invalid export format'),
+  body('dataCategories')
+    .optional()
+    .isArray()
+    .withMessage('Data categories must be an array'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -401,11 +391,9 @@ router.get('/export-requests',
  */
 router.get('/export/:requestId/download',
   auth,
-  [
-    param('requestId')
-      .isMongoId()
-      .withMessage('Invalid request ID')
-  ],
+  param('requestId')
+    .isMongoId()
+    .withMessage('Invalid request ID'),
   handleValidationErrors,
   async (req, res) => {
     try {
@@ -527,11 +515,9 @@ router.get('/deletion-requests',
  */
 router.get('/check-consent/:consentType',
   auth,
-  [
-    param('consentType')
-      .isIn(['data_processing', 'document_storage', 'blockchain_storage', 'analytics', 'marketing', 'third_party_sharing', 'audit_logging'])
-      .withMessage('Invalid consent type')
-  ],
+  param('consentType')
+    .isIn(['data_processing', 'document_storage', 'blockchain_storage', 'analytics', 'marketing', 'third_party_sharing', 'audit_logging'])
+    .withMessage('Invalid consent type'),
   handleValidationErrors,
   async (req, res) => {
     try {

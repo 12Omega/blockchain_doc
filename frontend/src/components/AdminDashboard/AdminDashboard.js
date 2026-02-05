@@ -27,7 +27,7 @@ const AdminDashboard = () => {
 
   const loadDashboardData = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('authToken'); // Fixed: use 'authToken' instead of 'token'
       if (!token) {
         setError('Authentication required');
         setLoading(false);

@@ -277,17 +277,117 @@ class DocumentService {
     }
   }
 
-  // Download document
+  // Download document by hash
   async downloadDocument(documentHash) {
     try {
-      const response = await this.api.get(`/documents/${documentHash}/download`, {
+      const response = await this.api.post(`/documents/${documentHash}/download`, {}, {
         responseType: 'blob'
       });
       return response.data;
     } catch (error) {
       console.error('Error downloading document:', error);
+      
+      // Provide more specific error messages
+      if (error.response?.status === 404) {
+        throw new Error('Document not found');
+      } else if (error.response?.status === 403) {
+        throw new Error('You do not have permission to download this document');
+      } else if (error.response?.status === 500) {
+        throw new Error('Server error while downloading document. The file may not be available in storage.');
+      } else {
+        throw new Error(
+          error.response?.data?.error || error.response?.data?.message || 'Failed to download document'
+        );
+      }
+    }
+  }
+
+  // Student upload document
+  async studentUploadDocument(file, metadata, onProgress) {
+    try {
+      const formData = new FormData();
+      formData.append('document', file);
+      
+      // Append metadata fields individually
+      Object.keys(metadata).forEach(key => {
+        if (metadata[key] !== undefined && metadata[key] !== null && metadata[key] !== '') {
+          formData.append(key, metadata[key]);
+        }
+      });
+
+      const response = await this.api.post('/documents/student-upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (progressEvent) => {
+          if (onProgress && progressEvent.total) {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            onProgress(percentCompleted);
+          }
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error('Student document upload error:', error);
       throw new Error(
-        error.response?.data?.message || 'Failed to download document'
+        error.response?.data?.error || error.response?.data?.message || 'Failed to upload document'
+      );
+    }
+  }
+
+  // Get all documents (admin)
+  async getAllDocuments() {
+    try {
+      const response = await this.api.get('/documents');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all documents:', error);
+      throw new Error(
+        error.response?.data?.message || 'Failed to fetch documents'
+      );
+    }
+  }
+
+  // Get all users (admin)
+  async getAllUsers() {
+    try {
+      const response = await this.api.get('/users');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw new Error(
+        error.response?.data?.message || 'Failed to fetch users'
+      );
+    }
+  }
+
+  // Get admin dashboard data
+  async getAdminDashboard() {
+    try {
+      const response = await this.api.get('/admin/dashboard');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      throw new Error(
+        error.response?.data?.message || 'Failed to fetch dashboard data'
+      );
+    }
+  }
+
+  // Verify document by hash
+  async verifyDocumentByHash(documentHash) {
+    try {
+      const response = await this.api.post('/documents/verify-hash', {
+        documentHash
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Document hash verification error:', error);
+      throw new Error(
+        error.response?.data?.error || error.response?.data?.message || 'Failed to verify document'
       );
     }
   }
